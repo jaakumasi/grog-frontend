@@ -1,4 +1,4 @@
-<div class="relative z-0 w-full h-full bg-main-bg">
+<div class="absolute z-0 top-0 left-0 w-full h-full bg-main-bg">
     @if (isXSmallScreen || isSmallScreen) {
     <img class="z-10 absolute -top-9 -left-8 w-56" src="../assets/images/small-screen/bg circle top left.svg"
         alt="bg-arcs" />
@@ -21,6 +21,15 @@
     }
 </div>
 
-<div class="z-10">
-    <router-outlet></router-outlet>
+<div class="absolute z-10 w-full h-full flex justify-center items-center">
+    <div [ngClass]="{ 
+            xsmall: screenSize === 'xsmall', 
+            small: screenSize === 'small',
+            medium: screenSize === 'medium',
+            large: screenSize === 'large',
+            xlarge: screenSize === 'xlarge',
+        }">
+        <router-outlet></router-outlet>
+    </div>
+
 </div>
