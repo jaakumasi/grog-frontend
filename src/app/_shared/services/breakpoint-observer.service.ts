@@ -16,10 +16,11 @@ export class BreakpointObserverService {
 
   observeMedia(): Observable<BreakpointState> {
     return this.breakpointObserver.observe([
-      Breakpoints.XSmall,
-      Breakpoints.Small,
-      Breakpoints.Medium,
-      Breakpoints.Large,
+      BREAKPOINTS.XSMALL,
+      BREAKPOINTS.SMALL,
+      BREAKPOINTS.MEDIUM,
+      BREAKPOINTS.LARGE,
+      BREAKPOINTS.XLARGE,
     ]);
   }
 
@@ -30,6 +31,8 @@ export class BreakpointObserverService {
       ? SCREEN_SIZE.small
       : this.breakpointObserver.isMatched(BREAKPOINTS.MEDIUM)
       ? SCREEN_SIZE.medium
-      : SCREEN_SIZE.large;
+      : this.breakpointObserver.isMatched(BREAKPOINTS.LARGE)
+      ? SCREEN_SIZE.large
+      : SCREEN_SIZE.xlarge;
   }
 }
