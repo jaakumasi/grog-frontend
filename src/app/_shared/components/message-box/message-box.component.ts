@@ -5,7 +5,6 @@ import { Component, Input, OnInit } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './message-box.component.html',
-  styleUrl: './message-box.component.scss',
 })
 export class MessageBoxComponent implements OnInit {
   @Input() message!: string;
