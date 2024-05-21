@@ -1,1 +1,32 @@
-<p>request-otp works!</p>
+<div>
+    <app-grog-header [isSmall]="isSmall"></app-grog-header>
+
+    <!--space-->
+    <div class="w-full h-[1.3rem]"></div>
+
+    <app-message-box
+        message="Please provide your email address to receive an OTP"></app-message-box>
+
+    <!--space-->
+    <div class="w-full h-[1.3rem]"></div>
+
+    <form [formGroup]="requestOtpForm">
+        <div 
+            [ngClass]="{isLarge: !isSmall}">
+            <app-form-control
+                type="email"
+                iconPath="./assets/images/mail.svg"
+                placeholder="Email">
+            </app-form-control>
+
+            <!--vertical space for small screens-->
+            @if (isSmall) {
+                <div class="w-full h-[1.3rem]"></div>
+            }
+
+            <app-action-btn btnText="Send OTP"></app-action-btn>
+        </div>
+    </form>
+
+
+</div>
