@@ -1,1 +1,60 @@
-<p>signup works!</p>
+<div>
+    <app-grog-header [isSmall]="isSmall"></app-grog-header>
+
+    <!--space-->
+    <div class="w-full h-[1.3rem]"></div>
+
+    <app-message-box
+        message="Register an account on <span class='text-accent'>Grog</span> to persist your grocery shopping data"></app-message-box>
+
+    <form [formGroup]="signupForm">
+        <div class="w-full mx-auto sm:w-1/2">
+            <!--space-->
+            <div class="w-full h-[1.3rem]"></div>
+
+            <app-form-control 
+                type="text" 
+                iconPath="./assets/images/mail.svg" 
+                placeholder="Email"
+                [invalidInput]="emailRequired! || emailPatternInvalid!">
+            </app-form-control>
+
+            <!--space-->
+            <div class="w-full h-[1.3rem]"></div>
+
+            <app-form-control 
+                type="password]" 
+                iconPath="./assets/images/password.svg" 
+                placeholder="Password" 
+                [invalidInput]="passwordRequired! || passwordTooShort!">
+            </app-form-control>
+
+            <!--space-->
+            <div class="w-full h-[1.3rem]"></div>
+
+            <app-form-control 
+                type="password]" 
+                iconPath="./assets/images/password.svg" 
+                placeholder="Confirm Password" 
+                [invalidInput]="passwordRequired! || passwordTooShort!">
+            </app-form-control>
+
+            <!--space-->
+            <div class="w-full h-[1.3rem]"></div>
+
+            <!--sign up button-->
+            <app-action-btn btnText="Sign up"></app-action-btn>
+
+            <!--space-->
+            <div class="w-full h-1"></div>
+
+            <!--go to signin-->
+            <div class="text-center">
+                Already have an account? <span class="text-accent hover:cursor-pointer" routerLink="/auth/signin">Sign in</span>
+            </div>
+        
+
+        </div>
+    </form>
+
+</div>
