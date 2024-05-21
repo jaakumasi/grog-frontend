@@ -1,9 +1,11 @@
 <div class="relative">
     <input 
+        class="w-full p-3 pl-20 bg-black outline-none border-outline border-[0.1rem] rounded-md placeholder:text-white focus:border-accent" 
+        [ngClass]="{invalid: invalidInput}"
         [formControl]="formControl"
         [type]="type" 
         [placeholder]="placeholder"
-        class="w-full p-3 pl-20 bg-black outline-none border-outline border-[0.1rem] rounded-md placeholder:text-white" 
+        (blur)="onInputTouched()"
     />
     <img 
         [alt]="placeholder" 

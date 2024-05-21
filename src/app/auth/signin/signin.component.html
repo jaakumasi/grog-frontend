@@ -1,1 +1,74 @@
-<p>signin works!</p>
+<div>
+    <app-grog-header [isSmall]="isSmall"></app-grog-header>
+
+    <!--space-->
+    <div class="w-full h-[1.3rem]"></div>
+
+    <app-message-box
+        message="Welcome. Sign into your <span class='text-accent'>Grog</span> account to continue"></app-message-box>
+
+    <!--space-->
+    <div class="w-full h-[1.3rem]"></div>
+
+    <form [formGroup]="signinForm">
+        <div 
+            class="flex w-full" 
+            [class.flex-col-reverse]="isSmall" 
+            [class.grid]="!isSmall"
+            [class.grid-cols-7]="!isSmall">
+            <div 
+                class="col-span-3" 
+                [class.my-auto]="!isSmall" 
+                [class.items-center]="!isSmall">
+                <app-google-auth></app-google-auth>
+            </div>
+
+            <app-form-divider [isVertical]="!isSmall"></app-form-divider>
+
+            <div class="col-span-3">
+                <!--email-->
+                <app-form-control 
+                    type="text" 
+                    iconPath="./assets/images/mail.svg"
+                    placeholder="Email"
+                    [invalidInput]="emailRequired! || emailPatternInvalid!">
+                </app-form-control>
+
+                <!--invalid email message-->
+                <app-invalid-input-message
+                    [message]="emailRequired ? 'required': emailPatternInvalid ? 'enter a valid email': ''">
+                </app-invalid-input-message>
+
+                <!--password-->
+                <app-form-control 
+                    type="password" 
+                    iconPath="./assets/images/password.svg"
+                    placeholder="Password"
+                    [invalidInput]="passwordRequired! || passwordTooShort!">
+                </app-form-control>
+
+                <!--invalid password message-->
+                <app-invalid-input-message 
+                    [message]="passwordRequired ? 'required': passwordTooShort ? 'too short. 8 characters minimum': ''">
+                </app-invalid-input-message>
+
+                <!--forgot password-->
+                <div class="for w-full text-right text-accent hover:cursor-pointer" routerLink="/auth/password-reset">Forgot password?</div>
+
+                <!--space-->
+                <div class="w-full h-1"></div>
+
+                <!--sign in button-->
+                <app-action-btn btnText="Sign in" (clickEventEmitter)="onSignin()" [isEnabled]="isFormValid"></app-action-btn> 
+
+                <!--space-->
+                <div class="w-full h-1"></div>
+                
+                <!--go to signup-->
+                <div class="text-center">
+                    New here? <span class="text-accent hover:cursor-pointer" routerLink="/auth/signup">Create an account</span>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

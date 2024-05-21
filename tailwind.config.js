@@ -5,11 +5,18 @@ module.exports = {
     extend: {
       backgroundColor: {
         "main-bg": "#262626",
-        "big-g-bg": "#294E3E",
+        "component-green": "#294E3E",
         "outline": "#07613A",
+        "accent": "#0EBD71",
+        "disabled": "#C3D2CB"
       },
       textColor: {
-        "accent": "#0EBD71"
+        "accent": "#0EBD71",
+        "error": "#C20000",
+      },
+      borderColor: {
+        "outline": "#07613A",
+        "accent": "#0EBD71",
       }
     },
   },

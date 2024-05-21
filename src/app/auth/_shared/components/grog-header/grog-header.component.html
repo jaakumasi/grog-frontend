@@ -1,12 +1,24 @@
-<div class="grog-header_ flex justify-between py-4 pl-5 pr-6 rounded-md rounded-tr-[2.2rem] shadow-md">
-    <div class="flex items-center">
-        <div class="pr-7 border-solid border-white border-r-2 text-[48px]">Grog</div>
-        <div class="ml-7 text-[28px]">Grocery Log</div>
+<div class="grog-header_ flex justify-between items-center py-4 pl-5 pr-6 rounded-md shadow-md">
+    <div 
+        [class.flex]="!isSmall"
+        [class.items-center]="!isSmall"
+        [class.flex-col]="isSmall"
+        [class.items-left]="isSmall">
+        <div 
+            class="grog_ border-solid border-white text-[38px]" 
+            [class.border-r-2]="!isSmall"
+            [class.pr-7]="!isSmall"
+            [class.text-[48px]]="!isSmall">
+            Grog
+        </div>
+        <div 
+            class="text-[28px]"
+            [class.ml-7]="!isSmall"
+            [class.text-[18px]]="isSmall">
+            Grocery Log
+        </div>
     </div>
     <div>
-        <div
-            class="bg-big-g-bg h-full w-full px-6 flex justify-center items-center rounded-md rounded-tr-[2.2rem] text-[40px]">
-            G
-        </div>
+        <img src="../../../../../assets/images/big g.svg" alt=""  class="w-24" />
     </div>
 </div>

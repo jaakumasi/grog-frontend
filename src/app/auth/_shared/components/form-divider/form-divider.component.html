@@ -1,9 +1,8 @@
 <div 
-    class="relative w-full h-[2px] mx-auto bg-outline" 
-    [class.h-full]="isVertical" 
-    [ngClass]="{width: isVertical}">
+    class="relative w-full h-[2px] mx-auto my-7 bg-outline" 
+    [ngClass]="{isVertical: isVertical}">
     <div 
-        class="absolute py-2 px-3 left-[50%] -translate-x-[50%] -translate-y-[55%] bg-main-bg border-outline border-solid border-[2px]"
+        class="absolute py-2 px-3 left-[50%] -translate-x-[50%] -translate-y-[55%] bg-main-bg border-outline border-solid border-[2px] rounded-md"
         [class.top-[50%]]="isVertical"
         [class.-translate-y-[50%]]="isVertical">
         Or

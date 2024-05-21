@@ -16,10 +16,9 @@ import { Subscription } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit {
   store = inject(Store);
   breakpointService = inject(BreakpointObserverService);
-  stateSubscription!: Subscription;
   screenSize!: SCREEN_SIZE;
 
   isXSmallScreen = false;
@@ -38,17 +37,9 @@ export class AppComponent implements OnInit, OnDestroy {
       this.screenSize = this.getCurrentScreenWidth(observer);
       this.store.dispatch(updateScreenSize({ screen: this.screenSize }));
     });
-
-    this.stateSubscription = this.store
-      .select(REDUCERS.GLOBAL_STATE_REDUCER)
-      .subscribe((gstate) => console.log(gstate));
-
-    console.log(this.screenSize);
   }
 
-  ngOnDestroy(): void {
-    this.stateSubscription.unsubscribe();
-  }
+
 
   getCurrentScreenWidth(observer: BreakpointState): SCREEN_SIZE {
     let screenSize: SCREEN_SIZE;

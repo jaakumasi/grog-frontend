@@ -1,18 +1,17 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, forwardRef, inject } from '@angular/core';
 import {
   ControlValueAccessor,
   FormBuilder,
   FormControl,
-  FormGroup,
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
-  ValidatorFn,
 } from '@angular/forms';
 
 @Component({
   selector: 'app-form-control',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './form-control.component.html',
   styleUrl: './form-control.component.scss',
   providers: [
@@ -25,27 +24,29 @@ import {
 })
 export class FormControlComponent implements OnInit, ControlValueAccessor {
   @Input() type!: string;
-  @Input() formControlName!: string;
   @Input() initialValue!: string;
-  @Input() validators!: any[];
   @Input() iconPath!: string;
   @Input() placeholder!: string;
+  @Input() invalidInput!: boolean;
   formControl!: FormControl;
   formBuilder = inject(FormBuilder);
 
   ngOnInit(): void {
     this.formControl = this.formBuilder.control(this.initialValue || '');
     this.formControl.valueChanges.subscribe((value) => {
-      console.log(value)
       this.onInputChange(value);
     });
   }
 
   onInputChange(value: string) {}
 
+  onInputTouched() {}
+
   registerOnChange(fn: any): void {
     this.onInputChange = fn;
   }
-  registerOnTouched(fn: any): void {}
+  registerOnTouched(fn: any): void {
+    this.onInputTouched = fn;
+  }
   writeValue(obj: any): void {}
 }

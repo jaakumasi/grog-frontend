@@ -1,3 +1,33 @@
 .grog-header_ {
   background-image: linear-gradient(50deg, #07613a, #0ec073);
+
+  .grog_ {
+    color: white;
+    animation: color 20s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+    @keyframes color {
+      0%,
+      100% {
+        color: white;
+      }
+      15% {
+        color: rgb(31, 150, 13);
+      }
+      30% {
+        color: #0d955a;
+      }
+      45% {
+        color: #18c1d1;
+      }
+      60% {
+        color: #c0ae0e;
+      }
+      75% {
+        color: #174c88;
+      }
+      90% {
+        color: #c0700e;
+      }
+    }
+  }
 }
