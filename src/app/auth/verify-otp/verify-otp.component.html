@@ -4,26 +4,28 @@
     <!--space-->
     <div class="w-full h-[1.3rem]"></div>
 
-    <app-message-box message="Please enter the OTP sent to your email">
+    <app-message-box 
+        message="Please enter the OTP sent to your email">
     </app-message-box>
 
-    <!--space-->
-    <div class="w-full h-[1.3rem]"></div>
+    <app-error-message
+        [message]="showInvalidOtpMessage ? 'Invalid OTP': ''">
+    </app-error-message>
 
     <!--otp input boxes-->
     <div class="flex justify-between">
         <input
-            class="opt-1st w-[75px] h-[75px] lg:w-[140px] lg:h-[140px] text-[40px] xl:text-[56px] text-center border-solid border-[2px] border-outline bg-black rounded-md focus:border-accent focus:outline-none"
+            class="opt-1st w-[75px] h-[75px] lg:w-[140px] lg:h-[140px] 2xl:w-[200px] 2xl:h-[200px] text-[40px] xl:text-[56px] text-center border-solid border-[2px] border-outline bg-black rounded-md focus:border-accent focus:outline-none"
             maxlength="1" [(ngModel)]="otpInput1" (ngModelChange)="onOtpChange($event, otp2)" />
         <input #otp2
-            class="w-[75px] h-[75px] lg:w-[140px] lg:h-[140px] text-[40px] xl:text-[56px] text-center border-solid border-[2px] border-outline bg-black rounded-md focus:border-accent focus:outline-none"
+            class="w-[75px] h-[75px] lg:w-[140px] lg:h-[140px] 2xl:w-[200px] 2xl:h-[200px] text-[40px] xl:text-[56px] text-center border-solid border-[2px] border-outline bg-black rounded-md focus:border-accent focus:outline-none"
             maxlength="1" [(ngModel)]="otpInput2" (ngModelChange)="onOtpChange($event, otp3)"/>
         <input #otp3
-            class="w-[75px] h-[75px] lg:w-[140px] lg:h-[140px] text-[40px] xl:text-[56px] text-center border-solid border-[2px] border-outline bg-black rounded-md focus:border-accent focus:outline-none"
+            class="w-[75px] h-[75px] lg:w-[140px] lg:h-[140px] 2xl:w-[200px] 2xl:h-[200px] text-[40px] xl:text-[56px] text-center border-solid border-[2px] border-outline bg-black rounded-md focus:border-accent focus:outline-none"
             maxlength="1" [(ngModel)]="otpInput3" (ngModelChange)="onOtpChange($event, otp4)" />
         <input #otp4
-            class="w-[75px] h-[75px] lg:w-[140px] lg:h-[140px] text-[40px] xl:text-[56px] text-center border-solid border-[2px] border-outline bg-black rounded-md focus:border-accent focus:outline-none"
-            maxlength="1" />
+            class="w-[75px] h-[75px] lg:w-[140px] lg:h-[140px] 2xl:w-[200px] 2xl:h-[200px] text-[40px] xl:text-[56px] text-center border-solid border-[2px] border-outline bg-black rounded-md focus:border-accent focus:outline-none"
+            maxlength="1" [(ngModel)]="otpInput4" (ngModelChange)="onOtpChange($event, null)" />
     </div>
 
     <!--space-->
@@ -31,8 +33,8 @@
 
     <!--resend otp & timer-->
     <div class="flex justify-between px-1">
-        <div class="text-accent">Resent OTP</div>
-        <div>00:00</div>
+        <div class="text-accent" (click)="onResendOtp()">{{allowResend ? 'Resend OTP': ''}}</div>
+        <div>{{formattedWaitTime}}</div>
     </div>
 
     <!--space-->

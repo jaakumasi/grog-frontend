@@ -46,7 +46,7 @@
                 type="password" 
                 iconPath="./assets/images/password.svg" 
                 placeholder="Confirm Password" 
-                [invalidInput]="confirmPasswordRequired!">
+                [invalidInput]="confirmPasswordRequired! || passwordMismatch!">
             </app-form-control>
 
              <!--invalid confirm password message-->

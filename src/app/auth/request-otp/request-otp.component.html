@@ -13,20 +13,35 @@
     <form [formGroup]="requestOtpForm">
         <div 
             [ngClass]="{isLarge: !isSmall}">
-            <app-form-control
-                type="email"
-                iconPath="./assets/images/mail.svg"
-                placeholder="Email">
-            </app-form-control>
+            <!--email && invalid email input message-->
+            <div>
+                <app-form-control
+                    formControlName="email"
+                    type="email"
+                    iconPath="./assets/images/mail.svg"
+                    placeholder="Email"
+                    [invalidInput]="emailRequired! || emailPatternInvalid!">
+                </app-form-control>
 
-            <!--vertical space for small screens-->
-            @if (isSmall) {
-                <div class="w-full h-[1.3rem]"></div>
-            }
+                <!--invalid email message-->
+                <app-invalid-input-message
+                    [message]="emailRequired ? 'required': emailPatternInvalid ? 'enter a valid email': ''">
+                </app-invalid-input-message> 
+            </div>  
 
-            <app-action-btn btnText="Send OTP"></app-action-btn>
+            <!--send otp btn-->            
+            <app-action-btn 
+                btnText="Send OTP"
+                [isEnabled]="isFormValid">
+            </app-action-btn>
         </div>
     </form>
 
-
+    <!--no existing email error message-->
+    @if (showNonExistingUserError) {
+        <div>
+            <app-error-message message="No user with this email exists"></app-error-message>
+            <div class="text-accent text-center mt-2 text-[1rem]">Create an account?</div>
+        </div>
+    }
 </div>
