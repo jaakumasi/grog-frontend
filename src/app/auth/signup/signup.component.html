@@ -12,48 +12,67 @@
             <!--space-->
             <div class="w-full h-[1.3rem]"></div>
 
+            <!--email-->
             <app-form-control 
+                formControlName="email"
                 type="text" 
                 iconPath="./assets/images/mail.svg" 
                 placeholder="Email"
                 [invalidInput]="emailRequired! || emailPatternInvalid!">
             </app-form-control>
 
-            <!--space-->
-            <div class="w-full h-[1.3rem]"></div>
+             <!--invalid email message-->
+            <app-invalid-input-message
+                [message]="emailRequired ? 'required': emailPatternInvalid ? 'enter a valid email': ''">
+            </app-invalid-input-message>
 
+            <!--password-->
             <app-form-control 
-                type="password]" 
+                formControlName="password"
+                type="password" 
                 iconPath="./assets/images/password.svg" 
                 placeholder="Password" 
                 [invalidInput]="passwordRequired! || passwordTooShort!">
             </app-form-control>
 
-            <!--space-->
-            <div class="w-full h-[1.3rem]"></div>
+            <!--invalid password message-->
+            <app-invalid-input-message
+                [message]="passwordRequired ? 'required': passwordTooShort ? 'too short. 8 characters minimum': ''">
+            </app-invalid-input-message>      
 
+            <!--confirm password-->
             <app-form-control 
-                type="password]" 
+                formControlName="confirmPassword"
+                type="password" 
                 iconPath="./assets/images/password.svg" 
                 placeholder="Confirm Password" 
-                [invalidInput]="passwordRequired! || passwordTooShort!">
+                [invalidInput]="confirmPasswordRequired!">
             </app-form-control>
 
-            <!--space-->
-            <div class="w-full h-[1.3rem]"></div>
+             <!--invalid confirm password message-->
+            <app-invalid-input-message
+                [message]="confirmPasswordRequired ? 'required': passwordMismatch ? 'password mismatch': ''">
+            </app-invalid-input-message>            
 
             <!--sign up button-->
-            <app-action-btn btnText="Sign up"></app-action-btn>
+            <app-action-btn 
+                btnText="Sign up" 
+                (clickEventEmitter)="onSignup()" 
+                [isEnabled]="isFormValid">
+            </app-action-btn>
 
             <!--space-->
             <div class="w-full h-1"></div>
 
             <!--go to signin-->
             <div class="text-center">
-                Already have an account? <span class="text-accent hover:cursor-pointer" routerLink="/auth/signin">Sign in</span>
+                Already have an account? 
+                <span 
+                    class="text-accent hover:cursor-pointer" 
+                    routerLink="/auth/signin">
+                    Sign in
+                </span>
             </div>
-        
-
         </div>
     </form>
 

@@ -32,13 +32,12 @@ import { emailValidator } from '../_shared/validators/email.validator';
     InvalidInputMessageComponent,
     MessageBoxComponent,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
   ],
 })
 export class SigninComponent implements OnInit {
   state$ = inject(Store).select(REDUCERS.GLOBAL_STATE_REDUCER);
   signinForm!: FormGroup;
-  requiredValidator = Validators.required;
   formBuilder = inject(FormBuilder);
   isSmall = false;
   isLarge = false;
@@ -56,10 +55,7 @@ export class SigninComponent implements OnInit {
     });
 
     this.signinForm?.valueChanges.subscribe(
-      (val) => {
-        this.isFormValid = this.signinForm.valid
-        console.log('dsfvk')
-      }
+      (val) => (this.isFormValid = this.signinForm.valid)
     );
   }
 

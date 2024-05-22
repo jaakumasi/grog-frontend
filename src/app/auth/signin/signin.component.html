@@ -28,6 +28,7 @@
             <div class="col-span-3">
                 <!--email-->
                 <app-form-control 
+                    formControlName="email"
                     type="text" 
                     iconPath="./assets/images/mail.svg"
                     placeholder="Email"
@@ -41,6 +42,7 @@
 
                 <!--password-->
                 <app-form-control 
+                    formControlName="password"
                     type="password" 
                     iconPath="./assets/images/password.svg"
                     placeholder="Password"
@@ -53,20 +55,33 @@
                 </app-invalid-input-message>
 
                 <!--forgot password-->
-                <div class="for w-full text-right text-accent hover:cursor-pointer" routerLink="/auth/request-otp">Forgot password?</div>
+                <div 
+                    class="for w-full text-right text-accent hover:cursor-pointer" 
+                    routerLink="/auth/request-otp">
+                    Forgot password?
+                </div>
 
                 <!--space-->
                 <div class="w-full h-1"></div>
 
                 <!--sign in button-->
-                <app-action-btn btnText="Sign in" (clickEventEmitter)="onSignin()" [isEnabled]="isFormValid"></app-action-btn> 
+                <app-action-btn 
+                    btnText="Sign in" 
+                    (clickEventEmitter)="onSignin()" 
+                    [isEnabled]="isFormValid">
+                </app-action-btn> 
 
                 <!--space-->
                 <div class="w-full h-1"></div>
                 
                 <!--go to signup-->
                 <div class="text-center">
-                    New here? <span class="text-accent hover:cursor-pointer" routerLink="/auth/signup">Create an account</span>
+                    New here? 
+                    <span 
+                        class="text-accent hover:cursor-pointer" 
+                        routerLink="/auth/signup">
+                        Create an account
+                    </span>
                 </div>
             </div>
         </div>

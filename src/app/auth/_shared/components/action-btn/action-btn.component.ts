@@ -14,6 +14,6 @@ export class ActionBtnComponent {
   @Output() clickEventEmitter = new EventEmitter<null>();
 
   onClick() {
-    this.clickEventEmitter.emit();
+    if (this.isEnabled) this.clickEventEmitter.emit();
   }
 }
