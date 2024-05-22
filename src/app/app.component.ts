@@ -1,20 +1,18 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
-import { BreakpointObserverService } from './_shared/services/breakpoint-observer.service';
-import { BREAKPOINTS, REDUCERS } from './_shared/constants';
-import { Store } from '@ngrx/store';
-import { SCREEN_SIZE } from './_shared/store/store.state';
-import { updateScreenSize } from './_shared/store/store.actions';
 import { BreakpointState } from '@angular/cdk/layout';
-import { Subscription } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { BREAKPOINTS } from './_shared/constants';
+import { BreakpointObserverService } from './_shared/services/breakpoint-observer.service';
+import { updateScreenSize } from './_shared/store/store.actions';
+import { SCREEN_SIZE } from './_shared/store/store.state';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
   store = inject(Store);
@@ -38,8 +36,6 @@ export class AppComponent implements OnInit {
       this.store.dispatch(updateScreenSize({ screen: this.screenSize }));
     });
   }
-
-
 
   getCurrentScreenWidth(observer: BreakpointState): SCREEN_SIZE {
     let screenSize: SCREEN_SIZE;

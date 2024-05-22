@@ -1,6 +1,4 @@
 <div>
-    <app-grog-header [isSmall]="isSmall"></app-grog-header>
-
     <!--space-->
     <div class="w-full h-[1.3rem]"></div>
 
@@ -11,19 +9,12 @@
     <div class="w-full h-[1.3rem]"></div>
 
     <form [formGroup]="signinForm">
-        <div 
-            class="flex w-full" 
-            [class.flex-col-reverse]="isSmall" 
-            [class.grid]="!isSmall"
-            [class.grid-cols-7]="!isSmall">
-            <div 
-                class="col-span-3" 
-                [class.my-auto]="!isSmall" 
-                [class.items-center]="!isSmall">
-                <app-google-auth></app-google-auth>
+        <div class="flex w-full flex-col-reverse xl:grid xl:grid-cols-7">
+            <div class="col-span-3 xl:my-auto xl:items-center"> 
+                <!-- <app-google-auth></app-google-auth> -->
             </div>
 
-            <app-form-divider [isVertical]="!isSmall"></app-form-divider>
+            <app-form-divider></app-form-divider>
 
             <div class="col-span-3">
                 <!--email-->
@@ -46,12 +37,12 @@
                     type="password" 
                     iconPath="./assets/images/password.svg"
                     placeholder="Password"
-                    [invalidInput]="passwordRequired! || passwordTooShort!">
+                    [invalidInput]="passwordRequired!">
                 </app-form-control>
 
                 <!--invalid password message-->
                 <app-invalid-input-message 
-                    [message]="passwordRequired ? 'required': passwordTooShort ? 'too short. 8 characters minimum': ''">
+                    [message]="passwordRequired ? 'required': ''">
                 </app-invalid-input-message>
 
                 <!--forgot password-->

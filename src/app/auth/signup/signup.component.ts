@@ -6,12 +6,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { MessageBoxComponent } from '../../_shared/components/message-box/message-box.component';
-import { REDUCERS } from '../../_shared/constants';
 import { ActionBtnComponent } from '../_shared/components/action-btn/action-btn.component';
 import { FormControlComponent } from '../_shared/components/form-control/form-control.component';
-import { GrogHeaderComponent } from '../_shared/components/grog-header/grog-header.component';
 import { InvalidInputMessageComponent } from '../_shared/components/invalid-input-message/invalid-input-message.component';
 import { emailValidator } from '../_shared/validators/email.validator';
 import { passwordMatch } from '../_shared/validators/password-match.validator';
@@ -22,28 +19,19 @@ import { passwordMatch } from '../_shared/validators/password-match.validator';
   imports: [
     ActionBtnComponent,
     FormControlComponent,
-    GrogHeaderComponent,
     InvalidInputMessageComponent,
     MessageBoxComponent,
     ReactiveFormsModule,
     RouterModule,
   ],
   templateUrl: './signup.component.html',
-  styleUrl: './signup.component.scss',
 })
 export class SignupComponent implements OnInit {
-  state$ = inject(Store).select(REDUCERS.GLOBAL_STATE_REDUCER);
   formBuilder = inject(FormBuilder);
   signupForm!: FormGroup;
-  isSmall = false;
   isFormValid = false;
 
   ngOnInit(): void {
-    this.state$.subscribe((screenSize) => {
-      const screen = screenSize.screenSize;
-      this.isSmall = screen == 'small' || screen === 'xsmall';
-    });
-
     this.signupForm = this.formBuilder.group({
       email: ['', [Validators.required, emailValidator]],
       password: ['', [Validators.required, Validators.minLength(8)]],
@@ -100,6 +88,6 @@ export class SignupComponent implements OnInit {
     return (
       this.signupForm.get('confirmPassword')?.touched &&
       this.signupForm.hasError('passwordMismatch')
-    )
+    );
   }
 }

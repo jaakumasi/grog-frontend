@@ -1,6 +1,4 @@
 <div>
-    <app-grog-header [isSmall]="isSmall"></app-grog-header>
-
     <!--space-->
     <div class="w-full h-[1.3rem]"></div>
 
@@ -11,8 +9,7 @@
     <div class="w-full h-[1.3rem]"></div>
 
     <form [formGroup]="requestOtpForm">
-        <div 
-            [ngClass]="{isLarge: !isSmall}">
+        <div class="xl:grid xl:grid-cols-2 xl:gap-4">
             <!--email && invalid email input message-->
             <div>
                 <app-form-control

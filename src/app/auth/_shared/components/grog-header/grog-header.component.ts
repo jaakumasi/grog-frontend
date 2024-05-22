@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-grog-header',
@@ -7,7 +7,4 @@ import { Component, Input } from '@angular/core';
   templateUrl: './grog-header.component.html',
   styleUrl: './grog-header.component.scss',
 })
-export class GrogHeaderComponent {
-  @Input() isSmall = false;
-  
-}
+export class GrogHeaderComponent {}

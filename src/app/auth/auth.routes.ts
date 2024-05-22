@@ -6,7 +6,6 @@ import { RequestOtpComponent } from './request-otp/request-otp.component';
 import { SignupComponent } from './signup/signup.component';
 
 export const AuthRoutes: Routes = [
-  { path: '', redirectTo: '/auth/signin', pathMatch: 'full' },
   { path: 'signin', component: SigninComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'request-otp', component: RequestOtpComponent },

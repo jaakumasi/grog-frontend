@@ -1,24 +1,15 @@
-<div class="grog-header_ flex justify-between items-center py-4 pl-5 pr-6 rounded-md shadow-md">
-    <div 
-        [class.flex]="!isSmall"
-        [class.items-center]="!isSmall"
-        [class.flex-col]="isSmall"
-        [class.items-left]="isSmall">
+<div class="grog-header_ flex justify-between items-center py-2 pl-5 pr-6 rounded-md shadow-md">
+    <div class="xl:flex flex-col xl:flex-row xl:items-center">
         <div 
-            class="grog_ border-solid border-white text-[38px]" 
-            [class.border-r-2]="!isSmall"
-            [class.pr-7]="!isSmall"
-            [class.text-[48px]]="!isSmall">
+            class="grog_ border-solid border-white text-[38px] xl:border-r-2 xl:pr-7 xl:text-[48px]" >
             Grog
         </div>
         <div 
-            class="text-[28px]"
-            [class.ml-7]="!isSmall"
-            [class.text-[18px]]="isSmall">
+            class="text-[18px] xl:text-[28px] xl:ml-7">
             Grocery Log
         </div>
     </div>
     <div>
-        <img src="../../../../../assets/images/big g.svg" alt=""  class="w-24" />
+        <img src="../../../../../assets/images/big g.svg" alt=""  class="w-16" />
     </div>
 </div>
