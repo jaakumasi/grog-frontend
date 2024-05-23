@@ -7,8 +7,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { ErrorMessageComponent } from '../../_shared/components/error-message/error-message.component';
 import { MessageBoxComponent } from '../../_shared/components/message-box/message-box.component';
+import { MessageComponent } from '../../_shared/components/message/message.component';
 import { ActionBtnComponent } from '../_shared/components/action-btn/action-btn.component';
 import { FormControlComponent } from '../_shared/components/form-control/form-control.component';
 import { InvalidInputMessageComponent } from '../_shared/components/invalid-input-message/invalid-input-message.component';
@@ -20,7 +20,7 @@ import { emailValidator } from '../_shared/validators/email.validator';
   imports: [
     ActionBtnComponent,
     CommonModule,
-    ErrorMessageComponent,
+    MessageComponent,
     FormControlComponent,
     InvalidInputMessageComponent,
     MessageBoxComponent,

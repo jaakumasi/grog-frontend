@@ -1,15 +1,16 @@
 declare var google: any;
 
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-google-auth',
   standalone: true,
   imports: [],
   templateUrl: './google-auth.component.html',
-  styleUrl: './google-auth.component.scss',
 })
 export class GoogleAuthComponent implements OnInit {
+  @Output() credentialEmitter = new EventEmitter<any>();
+
   ngOnInit(): void {
     this.gInit();
   }
@@ -17,8 +18,10 @@ export class GoogleAuthComponent implements OnInit {
   gInit() {
     google.accounts.id.initialize({
       client_id:
-        '873847186399-o2i49t2fae1cviq82ukkbl4lvu99g22f.apps.googleusercontent.com',
-      callback: this.handleCredentialResponse,
+        '190199373473-dld4tnh6187uhdt7vrfers6ld7ofbdgi.apps.googleusercontent.com',
+      callback: (data: any) => {
+        this.credentialEmitter.emit(data);
+      },
     });
     google.accounts.id.renderButton(document.querySelector('.google-btn_'), {
       type: 'icon',
@@ -29,11 +32,11 @@ export class GoogleAuthComponent implements OnInit {
     });
   }
 
-  handleCredentialResponse(data: any) {
-    console.log(data);
-  }
-
   triggerGoogleSocialAuth() {
-    google.accounts.id.prompt();
+    try {
+      google.accounts.id.prompt();
+    } catch (error) {
+      console.error('Error during Google authentication:', error);
+    }
   }
 }

@@ -18,6 +18,7 @@ module.exports = {
       borderColor: {
         "outline": "#07613A",
         "accent": "#0EBD71",
+        "error": "#C20000",
       }
     },
   },

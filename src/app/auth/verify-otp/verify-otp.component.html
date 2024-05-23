@@ -2,46 +2,50 @@
     <!--space-->
     <div class="w-full h-[1.3rem]"></div>
 
-    <app-message-box 
-        message="Please enter the OTP sent to your email">
+    <app-message-box message="Please enter the OTP sent to your email">
     </app-message-box>
 
-    <app-error-message
-        [message]="showInvalidOtpMessage ? 'Invalid OTP': ''">
-    </app-error-message>
+    <!--space-->
+    <div class="w-full h-[1rem]"></div>
+
+    <!--invalid otp message-->
+    <app-message 
+        [type]="isVerifying() || isVerificationComplete() ? 'log': 'error'" 
+        [message]="
+            isVerifying() ? 'Verifying OTP': 
+            isVerificationComplete() ? 'OTP verified. Redirecting...':
+            showErrorResponse() ? errorResponse(): ''
+    ">
+    </app-message>
 
     <!--otp input boxes-->
     <div class="flex justify-between">
         <input
-            class="opt-1st w-[75px] h-[75px] lg:w-[140px] lg:h-[140px] 2xl:w-[200px] 2xl:h-[200px] text-[40px] xl:text-[56px] text-center border-solid border-[2px] border-outline bg-black rounded-md focus:border-accent focus:outline-none"
-            maxlength="1" [(ngModel)]="otpInput1" (ngModelChange)="onOtpChange($event, otp2)" />
+            class="w-[75px] h-[75px] lg:w-[140px] lg:h-[140px] 2xl:w-[200px] 2xl:h-[200px] text-[40px] xl:text-[56px] text-center border-solid border-[2px] border-outline bg-black rounded-md focus:border-accent focus:outline-none"
+            [class.border-error]="showErrorResponse()" [class.text-error]="showErrorResponse()" maxlength="1"
+            [(ngModel)]="otpInput1" (ngModelChange)="onOtpChange($event, otp2)" />
         <input #otp2
             class="w-[75px] h-[75px] lg:w-[140px] lg:h-[140px] 2xl:w-[200px] 2xl:h-[200px] text-[40px] xl:text-[56px] text-center border-solid border-[2px] border-outline bg-black rounded-md focus:border-accent focus:outline-none"
-            maxlength="1" [(ngModel)]="otpInput2" (ngModelChange)="onOtpChange($event, otp3)"/>
+            [class.border-error]="showErrorResponse()" [class.text-error]="showErrorResponse()" maxlength="1"
+            [(ngModel)]="otpInput2" (ngModelChange)="onOtpChange($event, otp3)" />
         <input #otp3
             class="w-[75px] h-[75px] lg:w-[140px] lg:h-[140px] 2xl:w-[200px] 2xl:h-[200px] text-[40px] xl:text-[56px] text-center border-solid border-[2px] border-outline bg-black rounded-md focus:border-accent focus:outline-none"
-            maxlength="1" [(ngModel)]="otpInput3" (ngModelChange)="onOtpChange($event, otp4)" />
+            [class.border-error]="showErrorResponse()" [class.text-error]="showErrorResponse()" maxlength="1"
+            [(ngModel)]="otpInput3" (ngModelChange)="onOtpChange($event, otp4)" />
         <input #otp4
             class="w-[75px] h-[75px] lg:w-[140px] lg:h-[140px] 2xl:w-[200px] 2xl:h-[200px] text-[40px] xl:text-[56px] text-center border-solid border-[2px] border-outline bg-black rounded-md focus:border-accent focus:outline-none"
-            maxlength="1" [(ngModel)]="otpInput4" (ngModelChange)="onOtpChange($event, null)" />
+            [class.border-error]="showErrorResponse()" [class.text-error]="showErrorResponse()" maxlength="1"
+            [(ngModel)]="otpInput4" (ngModelChange)="onOtpChange($event, null)" />
     </div>
 
     <!--space-->
-    <div class="w-full h-3"></div>
+    <div #space class="w-full h-3"></div>
 
     <!--resend otp & timer-->
     <div class="flex justify-between px-1">
-        <div class="text-accent" (click)="onResendOtp()">{{allowResend ? 'Resend OTP': ''}}</div>
-        <div>{{formattedWaitTime}}</div>
+        <div class="text-accent hover:cursor-pointer" (click)="onResendOtp()">
+            {{ allowResend() ? 'Resend OTP': '' }}
+        </div>
+        <div>{{ formattedWaitTime() }}</div>
     </div>
-
-    <!--space-->
-    <div class="w-full h-3"></div>
-
-    <!--verify btn-->
-    <div class="xl:w-1/2 xl:mx-auto">
-        <app-action-btn btnText="Verify OTP"></app-action-btn>
-    </div>
-
-
 </div>

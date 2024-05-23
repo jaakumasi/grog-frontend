@@ -11,7 +11,7 @@
     <form [formGroup]="signinForm">
         <div class="flex w-full flex-col-reverse xl:grid xl:grid-cols-7">
             <div class="col-span-3 xl:my-auto xl:items-center"> 
-                <app-google-auth></app-google-auth>
+                <app-google-auth (credentialEmitter)="onSignin($event, true)"></app-google-auth>
             </div>
 
             <app-form-divider></app-form-divider>
@@ -58,7 +58,7 @@
                 <!--sign in button-->
                 <app-action-btn 
                     btnText="Sign in" 
-                    (clickEventEmitter)="onSignin()" 
+                    (clickEventEmitter)="onSignin(null)" 
                     [isEnabled]="isFormValid">
                 </app-action-btn> 
 

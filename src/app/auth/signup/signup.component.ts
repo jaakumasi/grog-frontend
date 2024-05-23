@@ -1,15 +1,18 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MessageBoxComponent } from '../../_shared/components/message-box/message-box.component';
+import { STORAGE_KEYS } from '../../_shared/constants';
 import { ActionBtnComponent } from '../_shared/components/action-btn/action-btn.component';
 import { FormControlComponent } from '../_shared/components/form-control/form-control.component';
 import { InvalidInputMessageComponent } from '../_shared/components/invalid-input-message/invalid-input-message.component';
+import { ApiService } from '../_shared/services/api.service';
 import { emailValidator } from '../_shared/validators/email.validator';
 import { passwordMatch } from '../_shared/validators/password-match.validator';
 
@@ -19,6 +22,7 @@ import { passwordMatch } from '../_shared/validators/password-match.validator';
   imports: [
     ActionBtnComponent,
     FormControlComponent,
+    HttpClientModule,
     InvalidInputMessageComponent,
     MessageBoxComponent,
     ReactiveFormsModule,
@@ -28,8 +32,13 @@ import { passwordMatch } from '../_shared/validators/password-match.validator';
 })
 export class SignupComponent implements OnInit {
   formBuilder = inject(FormBuilder);
+  apiService = inject(ApiService);
+  router = inject(Router);
   signupForm!: FormGroup;
-  isFormValid = false;
+  isSubmitEnabled = signal(false);
+  showHttpErrorResponse = signal(false);
+  httpErrorMessage = signal('');
+  isFetchingData = signal(false);
 
   ngOnInit(): void {
     this.signupForm = this.formBuilder.group({
@@ -38,13 +47,48 @@ export class SignupComponent implements OnInit {
       confirmPassword: ['', [Validators.required]],
     });
     this.signupForm.addValidators(passwordMatch);
-    this.signupForm?.valueChanges.subscribe(
-      () => (this.isFormValid = this.signupForm.valid)
+    this.signupForm?.valueChanges.subscribe(() =>
+      this.isSubmitEnabled.set(this.signupForm.valid)
     );
   }
 
   onSignup() {
-    console.log(this.signupForm.value);
+    this.onRequestStart();
+    setTimeout(() => {
+      const formValue = this.signupForm.value;
+      const requestBody = {
+        email: formValue.email,
+        password: formValue.password,
+        isSocialLogin: false,
+      };
+      this.apiService.handleSignup(requestBody).subscribe({
+        next: (response: any) => {
+          this.onRequestEnd();
+          this.saveEmail();
+          this.router.navigateByUrl(response.data!.redirectTo);
+        },
+        error: (response: HttpErrorResponse) => {
+          this.onRequestEnd();
+          this.showHttpErrorResponse.set(true);
+          this.httpErrorMessage.set(response.error.message);
+        },
+      });
+    }, 2000);
+  }
+
+  saveEmail() {
+    localStorage.setItem(STORAGE_KEYS.EMAIL, this.signupForm.value.email);
+  }
+
+  onRequestStart() {
+    this.isFetchingData.set(true);
+    this.showHttpErrorResponse.set(false);
+    this.isSubmitEnabled.set(false);
+  }
+
+  onRequestEnd() {
+    this.isFetchingData.set(false);
+    this.isSubmitEnabled.set(true);
   }
 
   get emailRequired() {

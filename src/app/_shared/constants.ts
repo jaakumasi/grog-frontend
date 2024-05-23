@@ -9,3 +9,16 @@ export const BREAKPOINTS = {
 export const REDUCERS = {
   GLOBAL_STATE_REDUCER: 'globalStateReducer',
 };
+
+export const SERVER_URL = 'http://127.0.0.1:3000';
+
+export const STORAGE_KEYS = {
+  TOKEN: 'token',
+  EMAIL: 'email',
+};
+
+export const VERIFICATION_SCENARIO = {
+  PASSWORD_RESET: 'password-reset',
+  FORM_SIGNUP: 'form-signup',
+  SOCIAL_SIGNUP: 'social-signup'
+}

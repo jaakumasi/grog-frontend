@@ -44,12 +44,19 @@ export class SigninComponent implements OnInit {
     });
 
     this.signinForm?.valueChanges.subscribe(
-      (val) => (this.isFormValid = this.signinForm.valid)
+      () => (this.isFormValid = this.signinForm.valid)
     );
   }
 
-  onSignin() {
-    console.log(this.signinForm.value);
+  onSignin(
+    socialSigninCred: { credential: string, client_id: string } | null,
+    isSocialSignin: boolean = false
+  ) {
+    if (isSocialSignin) {
+      const payload = socialSigninCred!.credential.split('.')[1];
+      const decodedUser = atob(payload);
+      console.log(decodedUser);
+    }
   }
 
   get emailRequired() {

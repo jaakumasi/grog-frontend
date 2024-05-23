@@ -37,7 +37,7 @@
     <!--no existing email error message-->
     @if (showNonExistingUserError) {
         <div>
-            <app-error-message message="No user with this email exists"></app-error-message>
+            <app-message message="No user with this email exists" type="error"></app-message>
             <div class="text-accent text-center mt-2 text-[1rem]">Create an account?</div>
         </div>
     }
