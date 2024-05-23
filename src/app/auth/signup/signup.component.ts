@@ -37,11 +37,9 @@ export class SignupComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', [Validators.required]],
     });
-
     this.signupForm.addValidators(passwordMatch);
-
     this.signupForm?.valueChanges.subscribe(
-      (val) => (this.isFormValid = this.signupForm.valid)
+      () => (this.isFormValid = this.signupForm.valid)
     );
   }
 

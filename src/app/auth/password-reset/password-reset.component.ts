@@ -10,11 +10,13 @@ import { MessageBoxComponent } from '../../_shared/components/message-box/messag
 import { FormControlComponent } from '../_shared/components/form-control/form-control.component';
 import { InvalidInputMessageComponent } from '../_shared/components/invalid-input-message/invalid-input-message.component';
 import { passwordMatch } from '../_shared/validators/password-match.validator';
+import { ActionBtnComponent } from '../_shared/components/action-btn/action-btn.component';
 
 @Component({
   selector: 'app-password-reset',
   standalone: true,
   imports: [
+    ActionBtnComponent,
     CommonModule,
     FormControlComponent,
     InvalidInputMessageComponent,
@@ -30,14 +32,12 @@ export class PasswordResetComponent implements OnInit {
 
   ngOnInit(): void {
     this.passwordResetForm = this.formBuilder.group({
-      newPassword: ['', [Validators.required, Validators.minLength(8)]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', [Validators.required]],
     });
-
     this.passwordResetForm.addValidators(passwordMatch);
-
     this.passwordResetForm.valueChanges.subscribe(
-      (val) => (this.isFormValid = this.passwordResetForm.valid)
+      () => (this.isFormValid = this.passwordResetForm.valid)
     );
   }
 
@@ -63,6 +63,7 @@ export class PasswordResetComponent implements OnInit {
   }
 
   get passwordMismatch() {
+    console.log(this.passwordResetForm.hasError('passwordMismatch'))
     return (
       this.passwordResetForm.get('confirmPassword')?.touched &&
       this.passwordResetForm.hasError('passwordMismatch')
