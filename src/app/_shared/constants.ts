@@ -20,5 +20,10 @@ export const STORAGE_KEYS = {
 export const VERIFICATION_SCENARIO = {
   PASSWORD_RESET: 'password-reset',
   FORM_SIGNUP: 'form-signup',
-  SOCIAL_SIGNUP: 'social-signup'
-}
+  SOCIAL_SIGNUP: 'social-signup',
+};
+
+export const ENDPOINTS = {
+  SIGNIN: '/auth/signin',
+  GROC_LIST: '/groc-list',
+};

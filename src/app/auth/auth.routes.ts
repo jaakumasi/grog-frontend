@@ -9,6 +9,6 @@ export const AuthRoutes: Routes = [
   { path: 'signin', component: SigninComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'request-otp', component: RequestOtpComponent },
-  { path: 'verify-otp', component: VerifyOtpComponent },
+  { path: 'verify-otp/:scenario', component: VerifyOtpComponent },
   { path: 'password-reset', component: PasswordResetComponent },
 ];

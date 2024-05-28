@@ -16,14 +16,14 @@ export class GoogleAuthComponent implements OnInit {
   }
 
   gInit() {
-    google.accounts.id.initialize({
+    google?.accounts.id.initialize({
       client_id:
         '190199373473-dld4tnh6187uhdt7vrfers6ld7ofbdgi.apps.googleusercontent.com',
       callback: (data: any) => {
         this.credentialEmitter.emit(data);
       },
     });
-    google.accounts.id.renderButton(document.querySelector('.google-btn_'), {
+    google?.accounts.id.renderButton(document.querySelector('.google-btn_'), {
       type: 'icon',
       theme: 'outline',
       size: 'medium',
@@ -34,7 +34,7 @@ export class GoogleAuthComponent implements OnInit {
 
   triggerGoogleSocialAuth() {
     try {
-      google.accounts.id.prompt();
+      google?.accounts.id.prompt();
     } catch (error) {
       console.error('Error during Google authentication:', error);
     }

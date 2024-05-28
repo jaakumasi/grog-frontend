@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageBoxComponent } from '../../_shared/components/message-box/message-box.component';
 import { MessageComponent } from '../../_shared/components/message/message.component';
 import { STORAGE_KEYS, VERIFICATION_SCENARIO } from '../../_shared/constants';
@@ -23,13 +23,15 @@ import { ApiService } from '../_shared/services/api.service';
 export class VerifyOtpComponent implements OnInit {
   apiService = inject(ApiService);
   router = inject(Router);
+  route = inject(ActivatedRoute);
 
+  message = signal('Please enter the OTP sent to your email');
   allowResend = signal(false);
   isVerifying = signal(false);
   isVerificationComplete = signal(false);
   showErrorResponse = signal(false);
   errorResponse = signal('');
-  requestOtpWaitTime = signal(10);
+  requestOtpWaitTime = signal(60);
   formattedWaitTime = signal('00:00');
   intervalRef!: any;
 
@@ -40,11 +42,20 @@ export class VerifyOtpComponent implements OnInit {
   inputRegex = /\d/;
 
   ngOnInit(): void {
+    /* set the otp verification screen message to the parsed query param
+     * if its exists. */
+    this.route.queryParamMap.subscribe((qparams) => {
+      const qparamMsg = qparams.get('message');
+      if (qparamMsg) this.message.set(qparamMsg);
+    });
+    /* start the resend coundown */
     this.countdownTimer();
   }
 
   onOtpChange(value: string, ref: HTMLInputElement | null) {
+    /* ignore otp input changes if OTP verification is ongoing */
     if (this.isVerifying()) return;
+    /* process to submit if all fields are filled with numbers */
     if (
       this.inputRegex.test(this.otpInput1) &&
       this.inputRegex.test(this.otpInput2) &&
@@ -54,41 +65,41 @@ export class VerifyOtpComponent implements OnInit {
       this.onSubmit();
       return;
     }
+    /* move focus to next otp field if the current input is a number */
     const matches = this.inputRegex.test(value);
     if (matches && ref) ref.focus();
   }
 
   onSubmit() {
     this.onRequestStart();
-    setTimeout(() => {
-      const otp =
-        this.otpInput1 + this.otpInput2 + this.otpInput3 + this.otpInput4;
-      const requestBody = {
-        otp,
-        email: this.getEmail(),
-        verificationScenario: this.getVerificationScenario(),
-      };
-      this.apiService.handleOtpVerification(requestBody).subscribe({
-        next: (response: any) => {
-          console.log(response);
-          this.onRequestEnd();
-        },
-        error: (response: HttpErrorResponse) => {
-          console.log(response);
-          this.onRequestEnd();
-          this.errorResponse.set(response.error.message);
-          this.showErrorResponse.set(true);
-        },
-      });
-    }, 2000);
+
+    const otp =
+      this.otpInput1 + this.otpInput2 + this.otpInput3 + this.otpInput4;
+    const requestBody = {
+      otp,
+      email: this.getEmail(),
+      verificationScenario: this.getVerificationScenario(),
+    };
+    this.apiService.handleOtpVerification(requestBody).subscribe({
+      next: (response: any) => {
+        this.onRequestEnd();
+      },
+      error: (response: HttpErrorResponse) => {
+        console.log(response)
+        this.onRequestEnd();
+        this.errorResponse.set(response.error.message);
+        this.showErrorResponse.set(true);
+      },
+    });
   }
 
   getEmail() {
-    return localStorage.getItem(STORAGE_KEYS.EMAIL);
+    return globalThis.window?.localStorage.getItem(STORAGE_KEYS.EMAIL);
   }
 
   /**
-   * OTP verification is done during signup (using form or social signin provider) or password reset.
+   * OTP verification is done during signup (using form or social signin provider)
+   * or password reset.
    */
   getVerificationScenario() {
     const url = this.router.url;

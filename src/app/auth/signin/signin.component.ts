@@ -1,19 +1,28 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, NgZone, OnInit, inject, signal } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MessageBoxComponent } from '../../_shared/components/message-box/message-box.component';
+import { ENDPOINTS, STORAGE_KEYS } from '../../_shared/constants';
+import { ResponseObject } from '../../_shared/types';
 import { ActionBtnComponent } from '../_shared/components/action-btn/action-btn.component';
 import { FormControlComponent } from '../_shared/components/form-control/form-control.component';
 import { FormDividerComponent } from '../_shared/components/form-divider/form-divider.component';
 import { GoogleAuthComponent } from '../_shared/components/google-auth/google-auth.component';
 import { InvalidInputMessageComponent } from '../_shared/components/invalid-input-message/invalid-input-message.component';
+import { ApiService } from '../_shared/services/api.service';
+import {
+  FormSignupRequest,
+  SocialSignupRequest,
+} from '../_shared/types/requests.interfaces';
 import { emailValidator } from '../_shared/validators/email.validator';
+import { GoogleUser } from '../_shared/types/google-social-auth.interface';
 
 @Component({
   selector: 'app-signin',
@@ -32,10 +41,17 @@ import { emailValidator } from '../_shared/validators/email.validator';
   ],
 })
 export class SigninComponent implements OnInit {
-  signinForm!: FormGroup;
   formBuilder = inject(FormBuilder);
-  isLarge = false;
-  isFormValid = false;
+  apiService = inject(ApiService);
+  router = inject(Router);
+  ngZone = inject(NgZone);
+
+  signinForm!: FormGroup;
+  isLarge = signal(false);
+  isSubmitEnabled = signal(false);
+  showHttpErrorResponse = signal(false);
+  httpErrorMessage = signal('');
+  isMakingRequest = signal(false);
 
   ngOnInit(): void {
     this.signinForm = this.formBuilder.group({
@@ -43,20 +59,106 @@ export class SigninComponent implements OnInit {
       password: ['', [Validators.required]],
     });
 
-    this.signinForm?.valueChanges.subscribe(
-      () => (this.isFormValid = this.signinForm.valid)
+    this.signinForm?.valueChanges.subscribe(() =>
+      this.isSubmitEnabled.set(this.signinForm.valid)
     );
   }
 
   onSignin(
-    socialSigninCred: { credential: string, client_id: string } | null,
+    encodedUserCredentials: { credential: string; client_id: string } | null,
     isSocialSignin: boolean = false
   ) {
+    this.onRequestStart();
+
+    let requestBody: SocialSignupRequest | FormSignupRequest | {} = {};
+    let decodedUser: GoogleUser;
     if (isSocialSignin) {
-      const payload = socialSigninCred!.credential.split('.')[1];
-      const decodedUser = atob(payload);
-      console.log(decodedUser);
+      decodedUser = this.decodeCredentials(encodedUserCredentials!);
+      requestBody = {
+        email: decodedUser.email,
+        isSocialLogin: true,
+        socialLoginProvider: {
+          name: decodedUser.name,
+          profilePictureUrl: decodedUser.picture,
+          provider: 'google',
+        },
+      };
+    } else {
+      const email = this.signinForm.get('email')?.value;
+      const password = this.signinForm.get('password')?.value;
+      requestBody = {
+        email,
+        password,
+        isSocialLogin: false,
+      };
     }
+
+    /* For users who's OTPs are unverified, the email is required during verification.
+     * For form signins, the email would be available in the form email input.
+     * For social signins, it'll be in the decoded user credential obj. */
+    const formEmail = this.signinForm.get('email')?.value;
+    if (!formEmail) this.saveEmail(decodedUser!.email);
+    else this.saveEmail(formEmail);
+
+    this.apiService.handleSignin(requestBody).subscribe({
+      next: (response: any) => this.handleSuccessResponse(response),
+      error: (response: HttpErrorResponse) => {
+        this.handleErrorResponse(response);
+      },
+    });
+  }
+
+  saveEmail(email: string) {
+    globalThis.window?.localStorage.setItem(STORAGE_KEYS.EMAIL, email);
+  }
+
+  saveToken(response: ResponseObject) {
+    globalThis.window?.localStorage.setItem(
+      STORAGE_KEYS.TOKEN,
+      response.data!.token
+    );
+  }
+
+  handleSuccessResponse(response: ResponseObject) {
+    this.onRequestEnd();
+    this.saveToken(response);
+    this.router.navigateByUrl(ENDPOINTS.GROC_LIST);
+  }
+
+  handleErrorResponse(response: HttpErrorResponse) {
+    const message = response.error.message;
+    const redirectTo = response.error.data?.redirectTo;
+    const scenario = response.error.data?.scenario;
+    if (redirectTo) {
+      this.ngZone.run(async () => {
+        await this.router.navigate([redirectTo, scenario], {
+          queryParams: { message },
+        });
+      });
+      return;
+    }
+    this.onRequestEnd();
+    this.showHttpErrorResponse.set(true);
+    this.httpErrorMessage.set(response.error.message);
+  }
+
+  onRequestStart() {
+    this.isMakingRequest.set(true);
+    this.showHttpErrorResponse.set(false);
+    this.isSubmitEnabled.set(false);
+  }
+
+  onRequestEnd() {
+    this.isMakingRequest.set(false);
+    this.isSubmitEnabled.set(true);
+  }
+
+  decodeCredentials(credentials: {
+    credential: string;
+    client_id: string;
+  }): GoogleUser {
+    const payload = credentials.credential.split('.')[1];
+    return JSON.parse(atob(payload));
   }
 
   get emailRequired() {

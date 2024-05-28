@@ -23,12 +23,14 @@
                     type="text" 
                     iconPath="./assets/images/mail.svg"
                     placeholder="Email"
-                    [invalidInput]="emailRequired! || emailPatternInvalid!">
+                    [invalidInput]="emailRequired! || emailPatternInvalid! || showHttpErrorResponse()">
                 </app-form-control>
 
                 <!--invalid email message-->
                 <app-invalid-input-message
-                    [message]="emailRequired ? 'required': emailPatternInvalid ? 'enter a valid email': ''">
+                    [message]="emailRequired ? 'required': 
+                               emailPatternInvalid ? 'enter a valid email': 
+                               showHttpErrorResponse()? httpErrorMessage(): ''">
                 </app-invalid-input-message>
 
                 <!--password-->
@@ -37,7 +39,7 @@
                     type="password" 
                     iconPath="./assets/images/password.svg"
                     placeholder="Password"
-                    [invalidInput]="passwordRequired!">
+                    [invalidInput]="passwordRequired! || showHttpErrorResponse()">
                 </app-form-control>
 
                 <!--invalid password message-->
@@ -59,7 +61,8 @@
                 <app-action-btn 
                     btnText="Sign in" 
                     (clickEventEmitter)="onSignin(null)" 
-                    [isEnabled]="isFormValid">
+                    [isEnabled]="isSubmitEnabled()"
+                    [isLoading]="isMakingRequest()">
                 </app-action-btn> 
 
                 <!--space-->
