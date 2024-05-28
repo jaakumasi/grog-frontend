@@ -57,21 +57,23 @@
                 btnText="Sign up" 
                 (clickEventEmitter)="onSignup()" 
                 [isEnabled]="isSubmitEnabled()"
-                [isLoading]="isFetchingData()">
+                [isLoading]="isMakingRequest()">
             </app-action-btn>
 
             <!--space-->
             <div class="w-full h-1"></div>
 
             <!--go to signin-->
-            <div class="text-center">
-                Already have an account? 
-                <span 
-                    class="text-accent hover:cursor-pointer" 
-                    routerLink="/auth/signin">
-                    Sign in
-                </span>
-            </div>
+            @if (!isMakingRequest()) {
+                <div class="text-center">
+                    Already have an account? 
+                    <span 
+                        class="text-accent hover:cursor-pointer" 
+                        routerLink="/auth/signin">
+                        Sign in
+                    </span>
+                </div>
+            }
         </div>
     </form>
 

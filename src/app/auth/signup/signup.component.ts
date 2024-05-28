@@ -8,13 +8,14 @@ import {
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { MessageBoxComponent } from '../../_shared/components/message-box/message-box.component';
-import { STORAGE_KEYS } from '../../_shared/constants';
+import { ENDPOINTS, STORAGE_KEYS } from '../../_shared/constants';
 import { ActionBtnComponent } from '../_shared/components/action-btn/action-btn.component';
 import { FormControlComponent } from '../_shared/components/form-control/form-control.component';
 import { InvalidInputMessageComponent } from '../_shared/components/invalid-input-message/invalid-input-message.component';
 import { ApiService } from '../_shared/services/api.service';
 import { emailValidator } from '../_shared/validators/email.validator';
 import { passwordMatch } from '../_shared/validators/password-match.validator';
+import { ResponseObject } from '../../_shared/types';
 
 @Component({
   selector: 'app-signup',
@@ -38,7 +39,7 @@ export class SignupComponent implements OnInit {
   isSubmitEnabled = signal(false);
   showHttpErrorResponse = signal(false);
   httpErrorMessage = signal('');
-  isFetchingData = signal(false);
+  isMakingRequest = signal(false);
 
   ngOnInit(): void {
     this.signupForm = this.formBuilder.group({
@@ -54,6 +55,7 @@ export class SignupComponent implements OnInit {
 
   onSignup() {
     this.onRequestStart();
+
     setTimeout(() => {
       const formValue = this.signupForm.value;
       const requestBody = {
@@ -62,18 +64,23 @@ export class SignupComponent implements OnInit {
         isSocialLogin: false,
       };
       this.apiService.handleSignup(requestBody).subscribe({
-        next: (response: any) => {
-          this.onRequestEnd();
-          this.saveEmail();
-          this.router.navigateByUrl(response.data!.redirectTo);
-        },
-        error: (response: HttpErrorResponse) => {
-          this.onRequestEnd();
-          this.showHttpErrorResponse.set(true);
-          this.httpErrorMessage.set(response.error.message);
-        },
+        next: (response: any) => this.handleSuccessResponse(response),
+        error: (response: HttpErrorResponse) =>
+          this.handleErrorResponse(response),
       });
     }, 2000);
+  }
+
+  async handleSuccessResponse(response: ResponseObject) {
+    this.onRequestEnd();
+    this.saveEmail();
+    await this.router.navigateByUrl(ENDPOINTS.SIGNIN);
+  }
+
+  handleErrorResponse(response: HttpErrorResponse) {
+    this.onRequestEnd();
+    this.showHttpErrorResponse.set(true);
+    this.httpErrorMessage.set(response.error.message);
   }
 
   saveEmail() {
@@ -81,13 +88,13 @@ export class SignupComponent implements OnInit {
   }
 
   onRequestStart() {
-    this.isFetchingData.set(true);
+    this.isMakingRequest.set(true);
     this.showHttpErrorResponse.set(false);
     this.isSubmitEnabled.set(false);
   }
 
   onRequestEnd() {
-    this.isFetchingData.set(false);
+    this.isMakingRequest.set(false);
     this.isSubmitEnabled.set(true);
   }
 
