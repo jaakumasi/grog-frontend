@@ -1,3 +1,14 @@
+export const SERVER_URL = 'http://127.0.0.1:3000';
+
+export const ENDPOINTS = {
+  SIGNIN: '/auth/signin',
+  SIGNUP: '/auth/signup',
+  OTP_VERIFICATION: '/auth/verify-otp',
+  OTP_REQUEST: '/auth/request-otp',
+  PASSWORD_RESET: '/auth/reset-password',
+  GROC_LIST: '/groc-list',
+};
+
 export const BREAKPOINTS = {
   XSMALL: '(max-width: 599.98px)',
   SMALL: '(min-width: 600px) and (max-width: 959.98px)',
@@ -10,8 +21,6 @@ export const REDUCERS = {
   GLOBAL_STATE_REDUCER: 'globalStateReducer',
 };
 
-export const SERVER_URL = 'http://127.0.0.1:3000';
-
 export const STORAGE_KEYS = {
   TOKEN: 'token',
   EMAIL: 'email',
@@ -23,8 +32,4 @@ export const VERIFICATION_SCENARIO = {
   SOCIAL_SIGNUP: 'social-signup',
 };
 
-export const ENDPOINTS = {
-  SIGNIN: '/auth/signin',
-  OTP_VERIFICATION: '/auth/verify-otp',
-  GROC_LIST: '/groc-list',
-};
+export const REDIRECTION_TIMEOUT = 1500; // 1.5 seconds

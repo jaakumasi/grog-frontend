@@ -5,7 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageBoxComponent } from '../../_shared/components/message-box/message-box.component';
 import { MessageComponent } from '../../_shared/components/message/message.component';
-import { STORAGE_KEYS, VERIFICATION_SCENARIO } from '../../_shared/constants';
+import {
+  REDIRECTION_TIMEOUT,
+  STORAGE_KEYS,
+  VERIFICATION_SCENARIO,
+} from '../../_shared/constants';
 import { ApiService } from '../_shared/services/api.service';
 import { ResponseObject } from '../../_shared/types';
 
@@ -98,7 +102,7 @@ export class VerifyOtpComponent implements OnInit {
     const redirectTo = response.data?.redirectTo!;
     setTimeout(async () => {
       await this.router.navigateByUrl(redirectTo);
-    }, 2000);
+    }, REDIRECTION_TIMEOUT);
   }
 
   handleErrorResponse(response: HttpErrorResponse) {

@@ -1,8 +1,9 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { SERVER_URL } from '../../../_shared/constants';
+import { ENDPOINTS, SERVER_URL } from '../../../_shared/constants';
 import { Observable } from 'rxjs';
 import { ResponseObject } from '../../../_shared/types';
+import { PasswordReset } from '../types/requests.interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -10,13 +11,13 @@ import { ResponseObject } from '../../../_shared/types';
 export class ApiService {
   http = inject(HttpClient);
 
-  handleSignup(body: any): Observable<HttpErrorResponse | ResponseObject> {
-    return this.http.post<ResponseObject | HttpErrorResponse>(`${SERVER_URL}/auth/signup`, body);
+  handleSignup(body: any) {
+    return this.http.post(`${SERVER_URL}${ENDPOINTS.SIGNIN}`, body);
   }
 
   handleSignin(body: any): Observable<HttpErrorResponse | ResponseObject> {
     return this.http.post<ResponseObject | HttpErrorResponse>(
-      `${SERVER_URL}/auth/signin`,
+      `${SERVER_URL}${ENDPOINTS.SIGNUP}`,
       body
     );
   }
@@ -25,7 +26,7 @@ export class ApiService {
     body: any
   ): Observable<HttpErrorResponse | ResponseObject> {
     return this.http.post<ResponseObject | HttpErrorResponse>(
-      `${SERVER_URL}/auth/verify-otp`,
+      `${SERVER_URL}${ENDPOINTS.OTP_VERIFICATION}`,
       body
     );
   }
@@ -34,7 +35,16 @@ export class ApiService {
     email: string;
   }): Observable<HttpErrorResponse | ResponseObject> {
     return this.http.post<ResponseObject | HttpErrorResponse>(
-      `${SERVER_URL}/auth/request-otp`,
+      `${SERVER_URL}${ENDPOINTS.OTP_REQUEST}`,
+      body
+    );
+  }
+
+  handlePasswordRest(
+    body: PasswordReset
+  ): Observable<HttpErrorResponse | ResponseObject> {
+    return this.http.post<ResponseObject | HttpErrorResponse>(
+      `${SERVER_URL}${ENDPOINTS.PASSWORD_RESET}`,
       body
     );
   }

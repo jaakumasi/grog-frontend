@@ -13,3 +13,8 @@ export interface SocialSignupRequest {
     provider: string;
   };
 }
+
+export interface PasswordReset {
+  email: string;
+  password: string;
+}

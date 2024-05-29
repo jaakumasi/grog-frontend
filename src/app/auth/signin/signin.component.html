@@ -39,12 +39,12 @@
                     type="password" 
                     iconPath="./assets/images/password.svg"
                     placeholder="Password"
-                    [invalidInput]="passwordRequired! || passwordTooShort || showHttpErrorResponse()">
+                    [invalidInput]="passwordRequired! || showHttpErrorResponse()">
                 </app-form-control>
 
                 <!--invalid password message-->
                 <app-invalid-input-message 
-                    [message]="passwordRequired ? 'required': passwordTooShort ? 'too short. 8 characters minimum' : ''">
+                    [message]="passwordRequired ? 'required': ''">
                 </app-invalid-input-message>
 
                 <!--forgot password-->
