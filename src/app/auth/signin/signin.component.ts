@@ -120,6 +120,7 @@ export class SigninComponent implements OnInit {
   }
 
   handleSuccessResponse(response: ResponseObject) {
+    console.log(response)
     this.onRequestEnd();
     this.saveToken(response);
     this.router.navigateByUrl(ENDPOINTS.GROC_LIST);

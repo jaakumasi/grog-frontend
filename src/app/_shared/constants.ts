@@ -25,5 +25,6 @@ export const VERIFICATION_SCENARIO = {
 
 export const ENDPOINTS = {
   SIGNIN: '/auth/signin',
+  OTP_VERIFICATION: '/auth/verify-otp',
   GROC_LIST: '/groc-list',
 };

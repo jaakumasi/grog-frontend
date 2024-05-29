@@ -8,5 +8,5 @@ import { Component, Input } from '@angular/core';
 })
 export class MessageComponent {
   @Input() message = '';
-  @Input() type!: 'log' | 'error'; 
+  @Input() type!: 'log' | 'error' | 'success'; 
 }
