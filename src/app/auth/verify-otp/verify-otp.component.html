@@ -8,14 +8,18 @@
     <!--space-->
     <div class="w-full h-[1rem]"></div>
 
-    <!--invalid otp message-->
+    <!--otp verification status-->
     <app-message 
-        [type]="isVerifying() || isVerificationComplete() ? 'log': 'error'" 
+        [type]="
+            isVerifying() ? 'log': 
+            isVerificationComplete() ? 'success':
+            'error'
+        " 
         [message]="
             isVerifying() ? 'Verifying OTP': 
             isVerificationComplete() ? 'OTP verified. Redirecting...':
             showErrorResponse() ? errorResponse(): ''
-    ">
+        ">
     </app-message>
 
     <!--otp input boxes-->

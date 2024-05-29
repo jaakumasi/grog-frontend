@@ -16,6 +16,7 @@ import { ApiService } from '../_shared/services/api.service';
 import { emailValidator } from '../_shared/validators/email.validator';
 import { passwordMatch } from '../_shared/validators/password-match.validator';
 import { ResponseObject } from '../../_shared/types';
+import { MessageComponent } from '../../_shared/components/message/message.component';
 
 @Component({
   selector: 'app-signup',
@@ -25,6 +26,7 @@ import { ResponseObject } from '../../_shared/types';
     FormControlComponent,
     HttpClientModule,
     InvalidInputMessageComponent,
+    MessageComponent,
     MessageBoxComponent,
     ReactiveFormsModule,
     RouterModule,
@@ -40,6 +42,7 @@ export class SignupComponent implements OnInit {
   showHttpErrorResponse = signal(false);
   httpErrorMessage = signal('');
   isMakingRequest = signal(false);
+  isSignupSuccessful = signal(false);
 
   ngOnInit(): void {
     this.signupForm = this.formBuilder.group({
@@ -56,28 +59,35 @@ export class SignupComponent implements OnInit {
   onSignup() {
     this.onRequestStart();
 
-    setTimeout(() => {
-      const formValue = this.signupForm.value;
-      const requestBody = {
-        email: formValue.email,
-        password: formValue.password,
-        isSocialLogin: false,
-      };
-      this.apiService.handleSignup(requestBody).subscribe({
-        next: (response: any) => this.handleSuccessResponse(response),
-        error: (response: HttpErrorResponse) =>
-          this.handleErrorResponse(response),
-      });
+    const formValue = this.signupForm.value;
+    const requestBody = {
+      email: formValue.email,
+      password: formValue.password,
+      isSocialLogin: false,
+    };
+    this.apiService.handleSignup(requestBody).subscribe({
+      next: (response: any) => this.handleSuccessResponse(response),
+      error: (response: HttpErrorResponse) =>
+        this.handleErrorResponse(response),
+    });
+  }
+
+  handleSuccessResponse(response: ResponseObject) {
+    this.isSubmitEnabled.set(false);
+    this.saveEmail();
+    this.isSignupSuccessful.set(true);
+    this.isMakingRequest.set(true); // done to hide the redirect link to the signin page
+
+    const redirectTo = response.data?.redirectTo;
+    const scenario = response.data?.scenario;
+
+    setTimeout(async () => {
+      await this.router.navigate([redirectTo, scenario]);
     }, 2000);
   }
 
-  async handleSuccessResponse(response: ResponseObject) {
-    this.onRequestEnd();
-    this.saveEmail();
-    await this.router.navigateByUrl(ENDPOINTS.SIGNIN);
-  }
-
   handleErrorResponse(response: HttpErrorResponse) {
+    console.log(response);
     this.onRequestEnd();
     this.showHttpErrorResponse.set(true);
     this.httpErrorMessage.set(response.error.message);

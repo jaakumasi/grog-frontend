@@ -7,6 +7,7 @@ import { MessageBoxComponent } from '../../_shared/components/message-box/messag
 import { MessageComponent } from '../../_shared/components/message/message.component';
 import { STORAGE_KEYS, VERIFICATION_SCENARIO } from '../../_shared/constants';
 import { ApiService } from '../_shared/services/api.service';
+import { ResponseObject } from '../../_shared/types';
 
 @Component({
   selector: 'app-verify-otp',
@@ -30,6 +31,7 @@ export class VerifyOtpComponent implements OnInit {
   isVerifying = signal(false);
   isVerificationComplete = signal(false);
   showErrorResponse = signal(false);
+  isOtpInvalid = signal(false);
   errorResponse = signal('');
   requestOtpWaitTime = signal(60);
   formattedWaitTime = signal('00:00');
@@ -81,16 +83,29 @@ export class VerifyOtpComponent implements OnInit {
       verificationScenario: this.getVerificationScenario(),
     };
     this.apiService.handleOtpVerification(requestBody).subscribe({
-      next: (response: any) => {
-        this.onRequestEnd();
-      },
-      error: (response: HttpErrorResponse) => {
-        console.log(response)
-        this.onRequestEnd();
-        this.errorResponse.set(response.error.message);
-        this.showErrorResponse.set(true);
-      },
+      next: (response: any) => this.handleSuccessResponse(response),
+      error: (response: HttpErrorResponse) =>
+        this.handleErrorResponse(response),
     });
+  }
+
+  handleSuccessResponse(response: ResponseObject) {
+    this.onRequestEnd();
+    clearInterval(this.intervalRef);
+    this.allowResend.set(false);
+    this.isVerificationComplete.set(true);
+
+    const redirectTo = response.data?.redirectTo!;
+    setTimeout(async () => {
+      await this.router.navigateByUrl(redirectTo);
+    }, 2000);
+  }
+
+  handleErrorResponse(response: HttpErrorResponse) {
+    this.onRequestEnd();
+    this.isOtpInvalid.set(true);
+    this.errorResponse.set(response.error.message);
+    this.showErrorResponse.set(true);
   }
 
   getEmail() {

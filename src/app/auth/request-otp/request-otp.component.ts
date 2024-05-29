@@ -41,7 +41,7 @@ export class RequestOtpComponent implements OnInit {
     });
 
     this.requestOtpForm.valueChanges.subscribe(
-      (val) => (this.isFormValid = this.requestOtpForm.valid)
+      () => (this.isFormValid = this.requestOtpForm.valid)
     );
   }
 
