@@ -29,16 +29,25 @@
             <!--send otp btn-->            
             <app-action-btn 
                 btnText="Send OTP"
-                [isEnabled]="isFormValid">
+                [isEnabled]="isFormValid()"
+                [isLoading]="isMakingRequest()"
+                (clickEventEmitter)="onSubmit()">
             </app-action-btn>
         </div>
     </form>
 
-    <!--no existing email error message-->
-    @if (showNonExistingUserError) {
+    <!--non-existing user error message-->
+    @if (showNonExistingUserError()) {
         <div>
-            <app-message message="No user with this email exists" type="error"></app-message>
-            <div class="text-accent text-center mt-2 text-[1rem]">Create an account?</div>
+            <app-message 
+                [message]="httpErrorResponse()" 
+                type="error">
+            </app-message>
+            <div 
+                class="text-accent text-center mt-2 text-[1rem]" 
+                [routerLink]="signinPage()">
+                Create an account?
+            </div>
         </div>
     }
 </div>

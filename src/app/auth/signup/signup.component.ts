@@ -94,7 +94,7 @@ export class SignupComponent implements OnInit {
   }
 
   saveEmail() {
-    localStorage.setItem(STORAGE_KEYS.EMAIL, this.signupForm.value.email);
+    globalThis.window?.localStorage.setItem(STORAGE_KEYS.EMAIL, this.signupForm.value.email);
   }
 
   onRequestStart() {

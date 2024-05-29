@@ -10,8 +10,8 @@ import { ResponseObject } from '../../../_shared/types';
 export class ApiService {
   http = inject(HttpClient);
 
-  handleSignup(body: any) {
-    return this.http.post(`${SERVER_URL}/auth/signup`, body);
+  handleSignup(body: any): Observable<HttpErrorResponse | ResponseObject> {
+    return this.http.post<ResponseObject | HttpErrorResponse>(`${SERVER_URL}/auth/signup`, body);
   }
 
   handleSignin(body: any): Observable<HttpErrorResponse | ResponseObject> {

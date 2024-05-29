@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, NgZone, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -17,12 +17,12 @@ import { FormDividerComponent } from '../_shared/components/form-divider/form-di
 import { GoogleAuthComponent } from '../_shared/components/google-auth/google-auth.component';
 import { InvalidInputMessageComponent } from '../_shared/components/invalid-input-message/invalid-input-message.component';
 import { ApiService } from '../_shared/services/api.service';
+import { GoogleUser } from '../_shared/types/google-social-auth.interface';
 import {
   FormSignupRequest,
   SocialSignupRequest,
 } from '../_shared/types/requests.interfaces';
 import { emailValidator } from '../_shared/validators/email.validator';
-import { GoogleUser } from '../_shared/types/google-social-auth.interface';
 
 @Component({
   selector: 'app-signin',
@@ -44,7 +44,6 @@ export class SigninComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   apiService = inject(ApiService);
   router = inject(Router);
-  ngZone = inject(NgZone);
 
   signinForm!: FormGroup;
   isLarge = signal(false);
@@ -56,7 +55,7 @@ export class SigninComponent implements OnInit {
   ngOnInit(): void {
     this.signinForm = this.formBuilder.group({
       email: ['', [Validators.required, emailValidator]],
-      password: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
     });
 
     this.signinForm?.valueChanges.subscribe(() =>
@@ -120,27 +119,28 @@ export class SigninComponent implements OnInit {
   }
 
   handleSuccessResponse(response: ResponseObject) {
-    console.log(response)
     this.onRequestEnd();
     this.saveToken(response);
     this.router.navigateByUrl(ENDPOINTS.GROC_LIST);
   }
 
-  handleErrorResponse(response: HttpErrorResponse) {
+  async handleErrorResponse(response: HttpErrorResponse) {
+    console.log(response);
     const message = response.error.message;
     const redirectTo = response.error.data?.redirectTo;
     const scenario = response.error.data?.scenario;
+
+    let url = scenario && redirectTo ? [redirectTo, scenario] : [redirectTo];
     if (redirectTo) {
-      this.ngZone.run(async () => {
-        await this.router.navigate([redirectTo, scenario], {
-          queryParams: { message },
-        });
+      await this.router.navigate(url, {
+        queryParams: { message },
       });
       return;
     }
+
     this.onRequestEnd();
     this.showHttpErrorResponse.set(true);
-    this.httpErrorMessage.set(response.error.message);
+    this.httpErrorMessage.set(message);
   }
 
   onRequestStart() {
@@ -180,6 +180,13 @@ export class SigninComponent implements OnInit {
     return (
       this.signinForm.get('password')?.touched &&
       this.signinForm.get('password')?.hasError('required')
+    );
+  }
+
+  get passwordTooShort() {
+    return (
+      this.signinForm.get('password')?.touched &&
+      this.signinForm.get('password')?.hasError('minlength')
     );
   }
 }
