@@ -12,12 +12,12 @@ export class ApiService {
   http = inject(HttpClient);
 
   handleSignup(body: any) {
-    return this.http.post(`${SERVER_URL}${ENDPOINTS.SIGNIN}`, body);
+    return this.http.post(`${SERVER_URL}${ENDPOINTS.SIGNUP}`, body);
   }
 
   handleSignin(body: any): Observable<HttpErrorResponse | ResponseObject> {
     return this.http.post<ResponseObject | HttpErrorResponse>(
-      `${SERVER_URL}${ENDPOINTS.SIGNUP}`,
+      `${SERVER_URL}${ENDPOINTS.SIGNIN}`,
       body
     );
   }

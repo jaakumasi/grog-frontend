@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -11,6 +11,17 @@ import { FormControlComponent } from '../_shared/components/form-control/form-co
 import { InvalidInputMessageComponent } from '../_shared/components/invalid-input-message/invalid-input-message.component';
 import { passwordMatch } from '../_shared/validators/password-match.validator';
 import { ActionBtnComponent } from '../_shared/components/action-btn/action-btn.component';
+import {
+  ENDPOINTS,
+  REDIRECTION_TIMEOUT,
+  STORAGE_KEYS,
+} from '../../_shared/constants';
+import { ApiService } from '../_shared/services/api.service';
+import { PasswordReset } from '../_shared/types/requests.interfaces';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ResponseObject } from '../../_shared/types';
+import { Router } from '@angular/router';
+import { MessageComponent } from '../../_shared/components/message/message.component';
 
 @Component({
   selector: 'app-password-reset',
@@ -20,6 +31,7 @@ import { ActionBtnComponent } from '../_shared/components/action-btn/action-btn.
     CommonModule,
     FormControlComponent,
     InvalidInputMessageComponent,
+    MessageComponent,
     MessageBoxComponent,
     ReactiveFormsModule,
   ],
@@ -27,8 +39,15 @@ import { ActionBtnComponent } from '../_shared/components/action-btn/action-btn.
 })
 export class PasswordResetComponent implements OnInit {
   formBuilder = inject(FormBuilder);
+  apiService = inject(ApiService);
+  router = inject(Router);
+
   passwordResetForm!: FormGroup;
-  isFormValid = false;
+  isSubmitEnabled = signal(false);
+  isMakingRequest = signal(false);
+  showHttpErrorResponse = signal(false);
+  showSuccessfulPasswordResetNotif = signal(false);
+  httpErrorMessage = signal('');
 
   ngOnInit(): void {
     this.passwordResetForm = this.formBuilder.group({
@@ -36,22 +55,66 @@ export class PasswordResetComponent implements OnInit {
       confirmPassword: ['', [Validators.required]],
     });
     this.passwordResetForm.addValidators(passwordMatch);
-    this.passwordResetForm.valueChanges.subscribe(
-      () => (this.isFormValid = this.passwordResetForm.valid)
+    this.passwordResetForm.valueChanges.subscribe(() =>
+      this.isSubmitEnabled.set(this.passwordResetForm.valid)
     );
+  }
+
+  onApply() {
+    this.onRequestStart();
+
+    const requestBody = {
+      email: this.getEmail(),
+      password: this.passwordResetForm.get('password')?.value,
+    } as PasswordReset;
+
+    this.apiService.handlePasswordRest(requestBody).subscribe({
+      next: (response: any) => this.handleSuccessResponse(response),
+      error: (response: HttpErrorResponse) =>
+        this.handleErrorResponse(response),
+    });
+  }
+
+  handleSuccessResponse(response: ResponseObject) {
+    this.onRequestEnd();
+    this.showSuccessfulPasswordResetNotif.set(true);
+
+    setTimeout(async () => {
+      await this.router.navigateByUrl(ENDPOINTS.SIGNIN);
+    }, REDIRECTION_TIMEOUT);
+  }
+
+  onRequestStart() {
+    this.isMakingRequest.set(true);
+    this.isSubmitEnabled.set(false);
+    this.showHttpErrorResponse.set(false);
+  }
+
+  onRequestEnd() {
+    this.isMakingRequest.set(false);
+  }
+
+  handleErrorResponse(response: HttpErrorResponse) {
+    this.onRequestEnd();
+    this.httpErrorMessage.set(response.error.message);
+    this.showHttpErrorResponse.set(true);
+  }
+
+  getEmail() {
+    return globalThis.window.localStorage.getItem(STORAGE_KEYS.EMAIL);
   }
 
   get passwordRequired() {
     return (
-      this.passwordResetForm.get('newPassword')?.touched &&
-      this.passwordResetForm.get('newPassword')?.hasError('required')
+      this.passwordResetForm.get('password')?.touched &&
+      this.passwordResetForm.get('password')?.hasError('required')
     );
   }
 
   get passwordTooShort() {
     return (
-      this.passwordResetForm.get('newPassword')?.touched &&
-      this.passwordResetForm.get('newPassword')?.hasError('minlength')
+      this.passwordResetForm.get('password')?.touched &&
+      this.passwordResetForm.get('password')?.hasError('minlength')
     );
   }
 
@@ -63,7 +126,7 @@ export class PasswordResetComponent implements OnInit {
   }
 
   get passwordMismatch() {
-    console.log(this.passwordResetForm.hasError('passwordMismatch'))
+    console.log(this.passwordResetForm.hasError('passwordMismatch'));
     return (
       this.passwordResetForm.get('confirmPassword')?.touched &&
       this.passwordResetForm.hasError('passwordMismatch')

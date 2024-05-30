@@ -24,6 +24,7 @@ import { ResponseObject } from '../../_shared/types';
     MessageBoxComponent,
   ],
   templateUrl: './verify-otp.component.html',
+  styleUrl: './verify-otp.component.scss',
 })
 export class VerifyOtpComponent implements OnInit {
   apiService = inject(ApiService);
@@ -95,6 +96,7 @@ export class VerifyOtpComponent implements OnInit {
 
   handleSuccessResponse(response: ResponseObject) {
     this.onRequestEnd();
+    this.isOtpInvalid.set(false);
     clearInterval(this.intervalRef);
     this.allowResend.set(false);
     this.isVerificationComplete.set(true);
@@ -112,6 +114,14 @@ export class VerifyOtpComponent implements OnInit {
     this.showErrorResponse.set(true);
   }
 
+  onRequestStart() {
+    this.isVerifying.set(true);
+  }
+
+  onRequestEnd() {
+    this.isVerifying.set(false);
+  }
+
   getEmail() {
     return globalThis.window?.localStorage.getItem(STORAGE_KEYS.EMAIL);
   }
@@ -127,14 +137,6 @@ export class VerifyOtpComponent implements OnInit {
       : url.endsWith(VERIFICATION_SCENARIO.FORM_SIGNUP)
       ? VERIFICATION_SCENARIO.FORM_SIGNUP
       : VERIFICATION_SCENARIO.SOCIAL_SIGNUP;
-  }
-
-  onRequestStart() {
-    this.isVerifying.set(true);
-  }
-
-  onRequestEnd() {
-    this.isVerifying.set(false);
   }
 
   onResendOtp() {
