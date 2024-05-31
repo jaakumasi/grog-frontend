@@ -1,6 +1,6 @@
 declare var google: any;
 
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, signal } from '@angular/core';
 
 @Component({
   selector: 'app-google-auth',
@@ -26,17 +26,8 @@ export class GoogleAuthComponent implements OnInit {
     google?.accounts.id.renderButton(document.querySelector('.google-btn_'), {
       type: 'icon',
       theme: 'outline',
-      size: 'medium',
-      shape: 'rectangle',
-      width: 80,
+      size: 'large',
+      shape: 'circle',
     });
-  }
-
-  triggerGoogleSocialAuth() {
-    try {
-      google?.accounts.id.prompt();
-    } catch (error) {
-      console.error('Error during Google authentication:', error);
-    }
   }
 }

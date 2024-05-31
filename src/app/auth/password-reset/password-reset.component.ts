@@ -20,7 +20,7 @@ import { ApiService } from '../_shared/services/api.service';
 import { PasswordReset } from '../_shared/types/requests.interfaces';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ResponseObject } from '../../_shared/types';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageComponent } from '../../_shared/components/message/message.component';
 
 @Component({
@@ -41,6 +41,9 @@ export class PasswordResetComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   apiService = inject(ApiService);
   router = inject(Router);
+  route = inject(ActivatedRoute);
+  message = signal('Set a new password');
+  showMessage = signal(false);
 
   passwordResetForm!: FormGroup;
   isSubmitEnabled = signal(false);
@@ -50,6 +53,14 @@ export class PasswordResetComponent implements OnInit {
   httpErrorMessage = signal('');
 
   ngOnInit(): void {
+    this.route.queryParamMap.subscribe((qparams) => {
+      const message = qparams.get('message');
+      if (message) {
+        this.message.set(message);
+        this.showMessage.set(true);
+      }
+    });
+
     this.passwordResetForm = this.formBuilder.group({
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', [Validators.required]],

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, NgZone, OnInit, inject, signal } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -9,8 +9,8 @@ import {
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { MessageBoxComponent } from '../../_shared/components/message-box/message-box.component';
-import { ENDPOINTS, STORAGE_KEYS } from '../../_shared/constants';
-import { ResponseObject } from '../../_shared/types';
+import { ENDPOINTS, REDUCERS, STORAGE_KEYS } from '../../_shared/constants';
+import { ResponseObject, User } from '../../_shared/types';
 import { ActionBtnComponent } from '../_shared/components/action-btn/action-btn.component';
 import { FormControlComponent } from '../_shared/components/form-control/form-control.component';
 import { FormDividerComponent } from '../_shared/components/form-divider/form-divider.component';
@@ -23,9 +23,12 @@ import {
   SocialSignupRequest,
 } from '../_shared/types/requests.interfaces';
 import { emailValidator } from '../_shared/validators/email.validator';
+import { Store } from '@ngrx/store';
+import { updateUser } from '../../_shared/store/store.actions';
 
 @Component({
   selector: 'app-signin',
+
   standalone: true,
   templateUrl: './signin.component.html',
   imports: [
@@ -44,6 +47,8 @@ export class SigninComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   apiService = inject(ApiService);
   router = inject(Router);
+  store = inject(Store);
+  ngZone = inject(NgZone);
 
   signinForm!: FormGroup;
   isLarge = signal(false);
@@ -100,7 +105,9 @@ export class SigninComponent implements OnInit {
     else this.saveEmail(formEmail);
 
     this.apiService.handleSignin(requestBody).subscribe({
-      next: (response: any) => this.handleSuccessResponse(response),
+      next: (response: any) => {
+        this.handleSuccessResponse(response);
+      },
       error: (response: HttpErrorResponse) => {
         this.handleErrorResponse(response);
       },
@@ -118,11 +125,20 @@ export class SigninComponent implements OnInit {
     );
   }
 
-  handleSuccessResponse(response: ResponseObject) {
-    console.log(response)
+  updateStore(user: User) {
+    console.log(user);
+    this.store.dispatch(updateUser({ user }));
+  }
+
+  async handleSuccessResponse(response: ResponseObject) {
+    console.log(response);
     this.onRequestEnd();
     this.saveToken(response);
-    this.router.navigateByUrl(ENDPOINTS.GROC_LIST);
+    const redirectTo = response.data?.redirectTo;
+    this.updateStore(response.data?.user!);
+    await this.ngZone.run(async () => {
+      await this.router.navigate([redirectTo]);
+    })
   }
 
   async handleErrorResponse(response: HttpErrorResponse) {
@@ -131,6 +147,7 @@ export class SigninComponent implements OnInit {
     const redirectTo = response.error.data?.redirectTo;
     const scenario = response.error.data?.scenario;
 
+    /* form the url based on whether a verification scenario is present in the response */
     let url = scenario && redirectTo ? [redirectTo, scenario] : [redirectTo];
     if (redirectTo) {
       await this.router.navigate(url, {
