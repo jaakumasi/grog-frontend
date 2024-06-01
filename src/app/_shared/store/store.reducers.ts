@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { globalState } from './store.state';
-import { updateScreenSize } from './store.actions';
+import { updateScreenSize, updateUser } from './store.actions';
 
 export const globalStateReducer = createReducer(
   globalState,
@@ -8,6 +8,12 @@ export const globalStateReducer = createReducer(
     return {
       ...state,
       screenSize: action.screen,
+    };
+  }),
+  on(updateUser, (state, action) => {
+    return {
+      ...state,
+      user: action.user,
     };
   })
 );

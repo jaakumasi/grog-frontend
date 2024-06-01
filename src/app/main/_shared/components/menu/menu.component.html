@@ -1,0 +1,43 @@
+<div class="fixed bottom-0 left-0 bg-main-bg pt-2 border-solid border-t-[2px] border-accent xl:bg-transparent xl:py-0 xl:border-t-0 w-full flex justify-around xl:relative xl:w-[60%] xl:mx-auto">
+    <!--groc. list-->
+    <div 
+        class="flex flex-col items-center hover:cursor-pointer" 
+        [routerLink]="[grocList]" 
+        routerLinkActive="active">
+        <img 
+            src="assets/images/groc-list.svg"
+            alt="list"
+            class="w-6 h-6"
+        />
+        <div class="menu-label_">Groc. List</div>
+        <div class="underline_ xl:w-6 bg-red h-[2px] bg-transparent"></div>
+    </div>
+
+    <!--geo-->
+    <div 
+        class="flex flex-col items-center hover:cursor-pointer" 
+        [routerLink]="[geo]" 
+        routerLinkActive="active">
+        <img 
+            src="assets/images/location.svg"
+            alt="list"
+            class="w-6 h-6"
+        />
+        <div class="menu-label_">Geo</div>
+        <div class="underline_ xl:w-6 bg-red h-[2px] bg-transparent"></div>
+    </div>
+
+    <!--stats-->
+    <div 
+        class="flex flex-col justify-center items-center hover:cursor-pointer" 
+        [routerLink]="[stats]" routerLinkActive="active"
+        >
+        <img 
+            src="assets/images/stats.svg"
+            alt="list"
+            class="w-6 h-6"
+        />
+        <div class="menu-label_">Stats</div>
+        <div class="underline_ xl:w-6 bg-red h-[2px] bg-transparent"></div>
+    </div>
+</div>

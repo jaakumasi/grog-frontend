@@ -5,7 +5,7 @@ import {
 } from '@angular/cdk/layout';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SCREEN_SIZE } from '../store/store.state';
+import { SCREEN_SIZE } from '../types';
 import { BREAKPOINTS } from '../constants';
 
 @Injectable({

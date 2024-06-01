@@ -9,7 +9,8 @@ module.exports = {
         "outline": "#07613A",
         "accent": "#0EBD71",
         "disabled": "#C3D2CB",
-        "active-btn": "#075E38"
+        "active-btn": "#075E38",
+        "red": "#C20000",
       },
       textColor: {
         "accent": "#0EBD71",

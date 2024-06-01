@@ -1,0 +1,30 @@
+<!--names are only available if a social provider object is defined-->
+@if (socialProvider) {
+    <div class="flex items-center mb-2 px-1">
+        <img class="mr-2 w-5 h-5" src="assets/images/user.png" alt="" />
+        <div class="text-[16px]">{{socialProvider?.name}}</div>
+    </div>
+}
+<!--email-->
+<div class="flex items-center mb-2 px-1">
+    <img class="mr-2 w-5 h-5" src="assets/images/mail.svg" alt="" />
+    <div>{{email}}</div>
+</div>
+
+<!--separator-->
+<div class="border-solid border-accent border-[1px] mb-2"></div>
+
+<!--dev contact-->
+<div class="flex items-center mb-2 px-1 hover:text-accent transition-colors ease-in hover:cursor-pointer">
+    <img class="mr-2 w-5 h-5" src="assets/images/contact.png" alt="" />
+    <div>Contact Dev</div>
+</div>
+
+<!--separator-->
+<div class="border-solid border-accent border-[1px] mb-2"></div>
+
+<!--sign out-->
+<div class="flex items-center mb-2 px-1 hover:text-accent transition-colors ease-in hover:cursor-pointer">
+    <img class="mr-2 w-5 h-5" src="assets/images/signout.png" alt="" />
+    <div>Sign Out</div>
+</div>
