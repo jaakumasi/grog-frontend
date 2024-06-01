@@ -62,7 +62,7 @@ export class VerifyOtpComponent implements OnInit {
   onOtpChange(value: string, ref: HTMLInputElement | null) {
     /* ignore otp input changes if OTP verification is ongoing */
     if (this.isVerifying()) return;
-    /* process to submit if all fields are filled with numbers */
+    /* submit if all fields have numeric inputs */
     if (
       this.inputRegex.test(this.otpInput1) &&
       this.inputRegex.test(this.otpInput2) &&
