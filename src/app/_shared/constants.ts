@@ -2,15 +2,15 @@ export const SERVER_URL = 'http://127.0.0.1:3000';
 
 export const ENDPOINTS = {
   /* AUTH */
-  SIGNIN: '/auth/signin',
-  SIGNUP: '/auth/signup',
-  OTP_VERIFICATION: '/auth/verify-otp',
-  OTP_REQUEST: '/auth/request-otp',
-  PASSWORD_RESET: '/auth/reset-password',
+  SIGNIN: 'auth/signin',
+  SIGNUP: 'auth/signup',
+  OTP_VERIFICATION: 'auth/verify-otp',
+  OTP_REQUEST: 'auth/request-otp',
+  PASSWORD_RESET: 'auth/reset-password',
   /* MAIN */
-  GROC_LIST: '/main/groc-list',
-  GEO: '/main/geo',
-  STATS: '/main/stats',
+  GROC_LIST: 'main/groc-list',
+  GEO: 'main/geo',
+  STATS: 'main/stats',
 };
 
 export const BREAKPOINTS = {

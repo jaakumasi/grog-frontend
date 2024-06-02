@@ -42,10 +42,10 @@ export type SocialLoginProvider = {
 };
 
 export type GroceryList = {
-  id: number;
+  id?: number;
   mart: string;
-  createdAt: Date;
-  item: Item[];
+  createdAt?: Date;
+  items: Item[];
 };
 
 export type Item = {

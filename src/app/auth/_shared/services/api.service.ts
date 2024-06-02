@@ -12,12 +12,12 @@ export class ApiService {
   http = inject(HttpClient);
 
   handleSignup(body: any) {
-    return this.http.post(`${SERVER_URL}${ENDPOINTS.SIGNUP}`, body);
+    return this.http.post(`${SERVER_URL}/${ENDPOINTS.SIGNUP}`, body);
   }
 
   handleSignin(body: any): Observable<HttpErrorResponse | ResponseObject> {
     return this.http.post<ResponseObject | HttpErrorResponse>(
-      `${SERVER_URL}${ENDPOINTS.SIGNIN}`,
+      `${SERVER_URL}/${ENDPOINTS.SIGNIN}`,
       body
     );
   }
@@ -26,7 +26,7 @@ export class ApiService {
     body: any
   ): Observable<HttpErrorResponse | ResponseObject> {
     return this.http.post<ResponseObject | HttpErrorResponse>(
-      `${SERVER_URL}${ENDPOINTS.OTP_VERIFICATION}`,
+      `${SERVER_URL}/${ENDPOINTS.OTP_VERIFICATION}`,
       body
     );
   }
@@ -35,7 +35,7 @@ export class ApiService {
     email: string;
   }): Observable<HttpErrorResponse | ResponseObject> {
     return this.http.post<ResponseObject | HttpErrorResponse>(
-      `${SERVER_URL}${ENDPOINTS.OTP_REQUEST}`,
+      `${SERVER_URL}/${ENDPOINTS.OTP_REQUEST}`,
       body
     );
   }
@@ -44,7 +44,7 @@ export class ApiService {
     body: PasswordReset
   ): Observable<HttpErrorResponse | ResponseObject> {
     return this.http.post<ResponseObject | HttpErrorResponse>(
-      `${SERVER_URL}${ENDPOINTS.PASSWORD_RESET}`,
+      `${SERVER_URL}/${ENDPOINTS.PASSWORD_RESET}`,
       body
     );
   }

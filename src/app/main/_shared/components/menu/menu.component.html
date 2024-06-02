@@ -2,42 +2,42 @@
     <!--groc. list-->
     <div 
         class="flex flex-col items-center hover:cursor-pointer" 
-        [routerLink]="[grocList]" 
+        routerLink="/{{grocList}}" 
         routerLinkActive="active">
         <img 
             src="assets/images/groc-list.svg"
             alt="list"
-            class="w-6 h-6"
+            class="w-5 h-5 xl:w-6 xl:h-6"
         />
-        <div class="menu-label_">Groc. List</div>
+        <div class="menu-label_ text-[14px] xl:text-[18px]">Groc. List</div>
         <div class="underline_ xl:w-6 bg-red h-[2px] bg-transparent"></div>
     </div>
 
     <!--geo-->
     <div 
         class="flex flex-col items-center hover:cursor-pointer" 
-        [routerLink]="[geo]" 
+        routerLink="/{{geo}}" 
         routerLinkActive="active">
         <img 
             src="assets/images/location.svg"
             alt="list"
-            class="w-6 h-6"
+            class="w-5 h-5 xl:w-6 xl:h-6"
         />
-        <div class="menu-label_">Geo</div>
+        <div class="menu-label_ text-[14px] xl:text-[18px]">Geo</div>
         <div class="underline_ xl:w-6 bg-red h-[2px] bg-transparent"></div>
     </div>
 
     <!--stats-->
     <div 
         class="flex flex-col justify-center items-center hover:cursor-pointer" 
-        [routerLink]="[stats]" routerLinkActive="active"
-        >
+        routerLink="/{{stats}}" 
+        routerLinkActive="active">
         <img 
             src="assets/images/stats.svg"
             alt="list"
-            class="w-6 h-6"
+            class="w-5 h-5 xl:w-6 xl:h-6"
         />
-        <div class="menu-label_">Stats</div>
+        <div class="menu-label_ text-[14px] xl:text-[18px]">Stats</div>
         <div class="underline_ xl:w-6 bg-red h-[2px] bg-transparent"></div>
     </div>
 </div>
