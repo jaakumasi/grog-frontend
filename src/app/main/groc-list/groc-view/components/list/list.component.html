@@ -1,0 +1,42 @@
+<div class="w-full p-2 border-solid border-outline border-l-accent border-[1px] border-l-2 rounded-md text-[16px] hover:cursor-pointer">
+    <!--mart name and date of list creation-->
+    <div class="flex justify-between mb-2" (click)="isExpanded.set(!isExpanded())">
+        <div>{{listData.mart}}</div>
+        <div>{{listData.createdAt | date}}</div>
+    </div>
+
+    <div class="relative">
+        <!--show only the item count when the list is compressed-->
+        @if (isExpanded()) {
+            @for (item of listData.item; track $index) {
+                <div class="flex justify-between" (click)="isExpanded.set(!isExpanded())">
+                    <div>~ {{item.name}}</div>
+                    <div>x{{item.qty}}</div>
+                </div>
+            }
+
+            <!--buttons-->
+            <div class="flex mt-2">
+               <div class="w-[60%]" (click)="isExpanded.set(!isExpanded())"></div>
+                <div class="flex w-full justify-around">
+                    <div class="flex justify-center items-center w-7 h-7 rounded-[50%] bg-component-green hover:bg-accent transition-colors ease-out" (click)="edit">
+                        <img class="w-4 h-4" src="assets/images/edit.png" alt="" />
+                    </div>
+    
+                    <div class="flex justify-center items-center w-7 h-7 rounded-[50%] bg-component-green hover:bg-accent transition-colors ease-out">
+                        <img class="w-4 h-4" src="assets/images/go-to-calc.png" alt="" />
+                    </div>
+    
+                    <div class="flex justify-center items-center w-7 h-7 rounded-[50%] bg-component-green hover:bg-accent transition-colors ease-out">
+                        <img class="w-5 h-5" src="assets/images/trash.png" alt="" />
+                    </div>
+                </div>
+                <div class="w-[60%]" (click)="isExpanded.set(!isExpanded())"></div>
+            </div>
+
+        }
+        @else {
+            <div (click)="isExpanded.set(!isExpanded())">{{itemsLength()}} {{itemsLength() > 1 ? "Items": "Item"}}</div>
+        }
+    </div>
+</div>

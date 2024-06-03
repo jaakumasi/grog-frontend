@@ -6,6 +6,7 @@ export type ResponseObject = {
     token: string;
     scenario: VerificationScenario;
     user: User;
+    list: []
   };
 };
 
@@ -45,7 +46,7 @@ export type GroceryList = {
   id?: number;
   mart: string;
   createdAt?: Date;
-  items: Item[];
+  item: Item[];
 };
 
 export type Item = {
