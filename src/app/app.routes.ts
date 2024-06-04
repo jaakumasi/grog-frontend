@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { AuthComponent } from './auth/auth.component';
-import { GrocListComponent } from './main/groc-list/groc-list.component';
 import { MainComponent } from './main/main.component';
 
 export const routes: Routes = [
@@ -12,7 +11,7 @@ export const routes: Routes = [
     loadChildren: async () =>
       (await import('../app/auth/auth.routes')).AuthRoutes,
   },
-  { path: 'main', redirectTo: '/main/groc-list', pathMatch: 'full' },
+  { path: 'main', redirectTo: '/main/groc-list/view', pathMatch: 'full' },
   {
     path: 'main',
     component: MainComponent,

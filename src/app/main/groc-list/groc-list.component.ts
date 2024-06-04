@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { ContentBoxComponent } from '../_shared/components/content-box/content-box.component';
 
 @Component({
   selector: 'app-groc-list',
   standalone: true,
-  imports: [ContentBoxComponent],
+  imports: [RouterOutlet],
   templateUrl: './groc-list.component.html',
-  styleUrl: './groc-list.component.scss'
+  styleUrl: './groc-list.component.scss',
 })
-export class GrocListComponent {
-
-}
+export class GrocListComponent {}

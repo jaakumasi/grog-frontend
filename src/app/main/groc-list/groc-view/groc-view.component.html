@@ -1,0 +1,15 @@
+<app-content-box>
+    @if (isFetchingData()) {
+        <app-loader></app-loader>
+    }
+    @else if (showNoDataMessage()) {
+        <app-no-data noDataMessage="No grocery lists to show. Create one"></app-no-data>
+    }
+    @else {
+        <div class="grid grid-cols-1 xl:grid-cols-2 gap-2">
+            @for (list of grocLists(); track $index) {
+                <app-list [listData]="list"></app-list>
+            }
+        </div>
+    }
+</app-content-box>

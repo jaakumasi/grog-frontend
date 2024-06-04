@@ -1,5 +1,5 @@
 import { HttpEventType, HttpInterceptorFn } from '@angular/common/http';
-import { STORAGE_KEYS } from '../../../_shared/constants';
+import { STORAGE_KEYS } from '../constants';
 import { tap } from 'rxjs';
 
 export const httpInterceptor: HttpInterceptorFn = (req, next) => {

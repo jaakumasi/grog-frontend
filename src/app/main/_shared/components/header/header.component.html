@@ -2,7 +2,7 @@
     <div class="w-[90%] mx-auto xl:w-full xl:mx-0 flex justify-between items-center">
         <div class="text-[30px]">{{title()}}</div>
 
-        <!--profile icon-->
+        <!--profile-->
         <div class="relative">
             <img 
                 class="w-8 h-8 rounded-[50%] hover:cursor-pointer"
@@ -15,7 +15,7 @@
 
             @if (showMenu()) {
                 @if (showMobileMenu()) {
-                    <div class="fixed top-0 left-0">
+                    <div class="fixed z-[99] top-0 left-0">
                         <!--backdrop-->
                         <div class="fixed top-0 left-0 w-full h-full bg-[#00000088]"></div>
 
