@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IconBtnComponent } from '../icon-btn/icon-btn.component';
 
 @Component({
@@ -6,9 +6,9 @@ import { IconBtnComponent } from '../icon-btn/icon-btn.component';
   standalone: true,
   imports: [IconBtnComponent],
   templateUrl: './outline-btn.component.html',
-  styleUrl: './outline-btn.component.scss'
 })
 export class OutlineBtnComponent {
   @Input() label!: string;
   @Input() iconPath!: string;
+  @Output() emitter = new EventEmitter<null>();
 }

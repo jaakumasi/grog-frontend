@@ -1,12 +1,18 @@
 import { BreakpointState } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  inject
+} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BREAKPOINTS } from './_shared/constants';
 import { BreakpointObserverService } from './_shared/services/breakpoint-observer.service';
 import { updateScreenSize } from './_shared/store/store.actions';
 import { SCREEN_SIZE } from './_shared/types';
+import { HeaderComponent } from './main/_shared/components/header/header.component';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +23,9 @@ import { SCREEN_SIZE } from './_shared/types';
 export class AppComponent implements OnInit {
   store = inject(Store);
   breakpointService = inject(BreakpointObserverService);
+
+  @ViewChild(HeaderComponent) headerComp?: HeaderComponent;
+
   screenSize!: SCREEN_SIZE;
 
   isXSmallScreen = false;
@@ -26,10 +35,17 @@ export class AppComponent implements OnInit {
   isXLargeScreen = false;
 
   ngOnInit(): void {
+    this.initScreenWidth();
+    this.subToMediaObserver();
+  }
+
+  initScreenWidth() {
     this.store.dispatch(
       updateScreenSize({ screen: this.breakpointService.intialScreenWidth() })
     );
+  }
 
+  subToMediaObserver() {
     this.breakpointService.observeMedia().subscribe((observer) => {
       if (!observer.matches) return;
       this.screenSize = this.getCurrentScreenWidth(observer);

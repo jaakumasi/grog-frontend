@@ -8,8 +8,9 @@ export const ENDPOINTS = {
   OTP_REQUEST: 'auth/request-otp',
   PASSWORD_RESET: 'auth/reset-password',
   /* MAIN */
-  GROC_LIST: 'main/groc-list', // defaults to /groc-list/view
+  GROC_LIST: 'main/groc-list', // defaults to /groc-list/view. Used as the endpoint for HTTP requests
   GROC_LIST_EDIT: 'main/groc-list/edit',
+  GROC_LIST_NEW: 'main/groc-list/new',
   GROC_LIST_CHECKLIST: 'main/groc-list/checklist',
   GEO: 'main/geo',
   STATS: 'main/stats',

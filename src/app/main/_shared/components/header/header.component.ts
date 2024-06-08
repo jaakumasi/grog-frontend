@@ -80,8 +80,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onShowMenu() {
-    this.showMenu.set(true);
-    if (this.screenSize === 'small' || this.screenSize === 'xsmall')
+    this.showMenu.set(!this.showMenu());
+    if (this.screenSize === 'xsmall')
       this.showMobileMenu.set(true);
     else this.showMobileMenu.set(false);
   }

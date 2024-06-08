@@ -8,5 +8,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class IconBtnComponent {
   @Input() iconPath!: string;
+  @Input() routerLinkProp!: string;
   @Output() emitter = new EventEmitter<null>();
 }
