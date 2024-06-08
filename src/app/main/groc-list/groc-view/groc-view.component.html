@@ -6,10 +6,18 @@
         <app-no-data noDataMessage="No grocery lists to show. Create one"></app-no-data>
     }
     @else {
-        <div class="grid grid-cols-1 xl:grid-cols-2 gap-2">
+        <div class="list-container_ gap-x-[2%]">
             @for (list of grocLists(); track $index) {
                 <app-list [listData]="list"></app-list>
             }
         </div>
+
+        <!-- @if (screenSize() === 'small' || screenSize() === 'xsmall') {
+            <div #smallScreenGrid></div>
+        }
+        @else {
+            <div #largeScreenGrid_1></div>
+            <div #largeScreenGrid_2></div>
+        } -->
     }
 </app-content-box>

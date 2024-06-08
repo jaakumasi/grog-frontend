@@ -1,0 +1,11 @@
+@import '../../../_shared/sass/mixins';
+
+.list-container_ {
+    column-count: 2;
+
+    @include max-md {
+        column-count: 1;
+    }
+
+    
+}

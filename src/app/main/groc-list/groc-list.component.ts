@@ -7,6 +7,5 @@ import { ContentBoxComponent } from '../_shared/components/content-box/content-b
   standalone: true,
   imports: [RouterOutlet],
   templateUrl: './groc-list.component.html',
-  styleUrl: './groc-list.component.scss',
 })
 export class GrocListComponent {}

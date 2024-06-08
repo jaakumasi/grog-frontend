@@ -6,6 +6,7 @@ module.exports = {
       backgroundColor: {
         "main-bg": "#262626",
         "component-green": "#294E3E",
+        "component-dull-green": "#0A8851",
         "outline": "#07613A",
         "accent": "#0EBD71",
         "disabled": "#C3D2CB",
