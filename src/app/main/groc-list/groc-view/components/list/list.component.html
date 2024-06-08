@@ -27,17 +27,9 @@
             <div class="flex">
                <div class="w-[60%] 2xl:w-[70%]" (click)="isExpanded.set(!isExpanded())"></div>
                 <div class="flex w-full justify-around">
-                    <div class="flex justify-center items-center w-7 h-7 rounded-[50%] bg-component-green hover:bg-accent transition-colors ease-out" (click)="edit">
-                        <img class="w-4 h-4" src="assets/images/edit.png" alt="" />
-                    </div>
-    
-                    <div class="flex justify-center items-center w-7 h-7 rounded-[50%] bg-component-green hover:bg-accent transition-colors ease-out">
-                        <img class="w-4 h-4" src="assets/images/go-to-calc.png" alt="" />
-                    </div>
-    
-                    <div class="flex justify-center items-center w-7 h-7 rounded-[50%] bg-component-green hover:bg-accent transition-colors ease-out">
-                        <img class="w-5 h-5" src="assets/images/trash.png" alt="" />
-                    </div>
+                    <app-icon-btn iconPath="assets/images/edit.png" />
+                    <app-icon-btn iconPath="assets/images/go-to-calc.png" />
+                    <app-icon-btn iconPath="assets/images/trash.png" />
                 </div> 
                 <div class="w-[60%] 2xl:w-[70%]" (click)="isExpanded.set(!isExpanded())"></div>
             </div>

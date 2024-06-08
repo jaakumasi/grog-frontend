@@ -6,7 +6,7 @@ export type ResponseObject = {
     token: string;
     scenario: VerificationScenario;
     user: User;
-    list: []
+    list: [];
   };
 };
 
@@ -35,6 +35,8 @@ export enum SCREEN_SIZE {
   'large' = 'large',
   'xlarge' = 'xlarge',
 }
+
+export type ListMode = 'add' | 'edit';
 
 export type SocialLoginProvider = {
   name: string;

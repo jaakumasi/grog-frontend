@@ -1,11 +1,12 @@
 import { Component, Input, OnInit, signal } from '@angular/core';
 import { GroceryList } from '../../../../../_shared/types';
 import { DatePipe, NgStyle } from '@angular/common';
+import { IconBtnComponent } from '../../../../_shared/components/icon-btn/icon-btn.component';
 
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [DatePipe, NgStyle],
+  imports: [DatePipe, IconBtnComponent, NgStyle],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
 })

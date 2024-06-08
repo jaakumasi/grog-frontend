@@ -131,7 +131,6 @@ export class SigninComponent implements OnInit {
   }
 
   async handleSuccessResponse(response: ResponseObject) {
-    console.log(response);
     this.onRequestEnd();
     this.saveToken(response);
     const redirectTo = response.data?.redirectTo;
@@ -142,7 +141,6 @@ export class SigninComponent implements OnInit {
   }
 
   async handleErrorResponse(response: HttpErrorResponse) {
-    console.log(response);
     const message = response.error.message;
     const redirectTo = response.error.data?.redirectTo;
     const scenario = response.error.data?.scenario;

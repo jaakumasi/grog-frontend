@@ -1,0 +1,30 @@
+<!--action btns-->
+<div class="w-full h-fit flex justify-center -translate-y-[30%] xl:-translate-y-[50%]">
+    @if (mode() == 'add') {
+        @if (screenSize() === 'small' || screenSize() === 'xsmall') {
+            <app-icon-btn iconPath="assets/images/add.png" />
+        }
+        @else { 
+            <app-outline-btn iconPath="assets/images/add.png" label="Add list" />
+        }
+    }
+    @else {
+        <div>
+            @if (screenSize() === 'small' || screenSize() === 'xsmall') {
+                <app-icon-btn iconPath="assets/images/cancel.png" class="mr-3"/>
+            }
+            @else { 
+                <app-outline-btn iconPath="assets/images/cancel.png" label="Cancel" />
+            }
+        </div> 
+        <div class="w-6"></div>
+        <div>
+            @if (screenSize() === 'small' || screenSize() === 'xsmall') {
+                <app-icon-btn iconPath="assets/images/check.png" class="mr-3"/>
+            }
+            @else { 
+                <app-outline-btn iconPath="assets/images/check.png" label="Save" />
+            }
+        </div> 
+    }
+</div>
