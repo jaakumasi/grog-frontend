@@ -2,41 +2,41 @@
     class="w-full p-2 mb-4 border-solid border-outline border-l-accent border-[1px] border-l-2 rounded-md text-[16px] hover:cursor-pointer break-inside-avoid transition-[height] duration-700"
     [ngStyle]="{columnSpan: 'none'}">
     <!--mart name and date of list creation-->
-    <div class="flex justify-between" (click)="isExpanded.set(!isExpanded())">
+    <div class="flex justify-between" (click)="onExpand()">
         <div>{{listData.mart}}</div>
         <div>{{listData.createdAt | date}}</div>
     </div>
 
     <!--space-->
-    <div class="w-full h-2" (click)="isExpanded.set(!isExpanded())"></div>
+    <div class="w-full h-2" (click)="onExpand()"></div>
 
     <div class="relative">
         <!--show only the item count when the list is compressed-->
         @if (isExpanded()) {
             @for (item of listData.item; track $index) {
-                <div class="flex justify-between" (click)="isExpanded.set(!isExpanded())">
+                <div class="flex justify-between" (click)="onExpand()">
                     <div>~ {{item.name}}</div>
                     <div>x{{item.qty}}</div>
                 </div>
             } 
  
             <!--space-->
-            <div class="w-full h-2" (click)="isExpanded.set(!isExpanded())"></div>
+            <div class="w-full h-2" (click)="onExpand()"></div>
 
             <!--buttons-->
             <div class="flex">
-               <div class="w-[60%] 2xl:w-[70%]" (click)="isExpanded.set(!isExpanded())"></div>
-                <div class="flex w-full justify-around">
+               <div class="w-[80%] 2xl:w-[70%]" (click)="onExpand()"></div>
+                <div class="flex w-full justify-between">
                     <app-icon-btn iconPath="assets/images/edit.png" />
                     <app-icon-btn iconPath="assets/images/go-to-calc.png" />
                     <app-icon-btn iconPath="assets/images/trash.png" />
                 </div> 
-                <div class="w-[60%] 2xl:w-[70%]" (click)="isExpanded.set(!isExpanded())"></div>
+                <div class="w-[80%] 2xl:w-[70%]" (click)="onExpand()"></div>
             </div>
 
         }
         @else {
-            <div (click)="isExpanded.set(!isExpanded())">{{itemsLength()}} {{itemsLength() > 1 ? "Items": "Item"}}</div>
+            <div (click)="onExpand()">{{itemsLength()}} {{itemsLength() > 1 ? "Items": "Item"}}</div>
         }
     </div>
 </div>
