@@ -48,7 +48,7 @@ export type GroceryList = {
   id?: number;
   mart: string;
   createdAt?: Date;
-  item: Item[];
+  items: Item[];
 };
 
 export type Item = {

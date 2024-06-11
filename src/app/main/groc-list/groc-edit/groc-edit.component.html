@@ -1,0 +1,9 @@
+<app-content-box>
+    <app-list-creator [onAddItem]="triggerAddListItemEvent"/>
+</app-content-box>
+
+<app-content-box-action-btns 
+    (saveListEvent)="onSaveList()" 
+    (cancelListEvent)="onCancelList()" 
+    (addListItemEvent)="triggerAddListItemEvent.emit()"
+/>

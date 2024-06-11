@@ -1,0 +1,21 @@
+<div class="mb-3">
+    <form [formGroup]="listItemRowForm" class="grid grid-cols-3 xl:grid-cols-2 gap-[3%]">
+        <app-form-control 
+            formControlName="name" 
+            placeholder="" 
+            class="col-span-2 xl:col-span-1" 
+            size="small" 
+        />
+        <div class="flex items-center w-full xl:w-[40%]">
+            <app-form-control 
+                formControlName="qty" 
+                initialValue="1"
+                [inputChanges]="defaultQtyValueEmitter"
+                placeholder="" 
+                class="mr-3"
+                size="small" 
+            />
+            <app-icon-btn iconPath="assets/images/cancel.png" (emitter)="onRemoveItem()" />
+        </div>
+    </form>
+</div>

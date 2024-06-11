@@ -32,7 +32,7 @@ export class ListComponent implements OnInit, OnDestroy {
   activeListSubscription?: Subscription;
 
   ngOnInit(): void {
-    this.itemsLength.set(this.listData.item.length);
+    this.itemsLength?.set(this.listData.items.length);
     this.subToActiveList();
   }
 

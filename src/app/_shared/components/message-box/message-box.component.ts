@@ -12,6 +12,6 @@ export class MessageBoxComponent implements OnInit {
   ngOnInit(): void {
     const p = document.createElement('p');
     p.innerHTML = this.message;
-    document.querySelector('.content_')!.insertAdjacentElement('afterbegin', p);
+    document.querySelector('.content_')?.insertAdjacentElement('afterbegin', p);
   }
 }

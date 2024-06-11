@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MessageBoxComponent } from '../../_shared/components/message-box/message-box.component';
-import { FormControlComponent } from '../_shared/components/form-control/form-control.component';
+import { FormControlComponent } from '../../_shared/components/form-control/form-control.component';
 import { InvalidInputMessageComponent } from '../_shared/components/invalid-input-message/invalid-input-message.component';
 import { passwordMatch } from '../_shared/validators/password-match.validator';
 import { ActionBtnComponent } from '../_shared/components/action-btn/action-btn.component';

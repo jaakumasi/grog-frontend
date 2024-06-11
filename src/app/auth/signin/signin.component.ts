@@ -8,11 +8,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { MessageBoxComponent } from '../../_shared/components/message-box/message-box.component';
-import { ENDPOINTS, REDUCERS, STORAGE_KEYS } from '../../_shared/constants';
+import { STORAGE_KEYS } from '../../_shared/constants';
+import { updateUser } from '../../_shared/store/store.actions';
 import { ResponseObject, User } from '../../_shared/types';
 import { ActionBtnComponent } from '../_shared/components/action-btn/action-btn.component';
-import { FormControlComponent } from '../_shared/components/form-control/form-control.component';
+import { FormControlComponent } from '../../_shared/components/form-control/form-control.component';
 import { FormDividerComponent } from '../_shared/components/form-divider/form-divider.component';
 import { GoogleAuthComponent } from '../_shared/components/google-auth/google-auth.component';
 import { InvalidInputMessageComponent } from '../_shared/components/invalid-input-message/invalid-input-message.component';
@@ -23,12 +25,9 @@ import {
   SocialSignupRequest,
 } from '../_shared/types/requests.interfaces';
 import { emailValidator } from '../_shared/validators/email.validator';
-import { Store } from '@ngrx/store';
-import { updateUser } from '../../_shared/store/store.actions';
 
 @Component({
   selector: 'app-signin',
-
   standalone: true,
   templateUrl: './signin.component.html',
   imports: [

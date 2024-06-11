@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, forwardRef, inject } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  forwardRef,
+  inject,
+} from '@angular/core';
 import {
   ControlValueAccessor,
   FormBuilder,
@@ -23,18 +30,32 @@ import {
   ],
 })
 export class FormControlComponent implements OnInit, ControlValueAccessor {
-  @Input() type!: string;
-  @Input() initialValue!: string;
-  @Input() iconPath!: string;
-  @Input() placeholder!: string;
-  @Input() invalidInput!: boolean;
+  @Input() type: string = 'text';
+  @Input() initialValue?: string;
+  /* listens for an invalid input. The parent emits a default default to be set */
+  @Input() inputChanges?: EventEmitter<string>;
+  @Input() iconPath?: string;
+  @Input() placeholder?: string;
+  @Input() invalidInput?: boolean;
+  @Input() size: 'small' | 'large' = 'large';
   formControl!: FormControl;
   formBuilder = inject(FormBuilder);
 
   ngOnInit(): void {
-    this.formControl = this.formBuilder.control(this.initialValue || '');
+    this.setupForm();
+    this.subToInputChangeEvent();
+  }
+
+  setupForm() {
+    this.formControl = this.formBuilder.control(this.initialValue ?? '');
     this.formControl.valueChanges.subscribe((value) => {
       this.onInputChange(value);
+    });
+  }
+
+  subToInputChangeEvent() {
+    this.inputChanges?.subscribe((newInputValue) => {
+      this.formControl.setValue(newInputValue);
     });
   }
 

@@ -13,7 +13,7 @@
     <div class="relative">
         <!--show only the item count when the list is compressed-->
         @if (isExpanded()) {
-            @for (item of listData.item; track $index) {
+            @for (item of listData.items; track $index) {
                 <div class="flex justify-between" (click)="onExpand()">
                     <div>~ {{item.name}}</div>
                     <div>x{{item.qty}}</div>

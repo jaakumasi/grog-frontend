@@ -1,0 +1,26 @@
+<div class="min-h-full">
+    <form [formGroup]="listForm">
+        <div class="mb-1 ml-2">Supermarket</div>
+        <!--mart input-->
+        <div class="w-full xl:w-[48.5%]">
+            <app-form-control 
+                initialValue="~"
+                size="small"
+            />
+        </div>
+
+        <!--space-->
+        <div class="w-full h-2"></div>
+
+        <!--list items header-->
+        <div class="w-full grid grid-cols-2 gap-[3%]">
+            <div class="mb-1 ml-2">Item</div>
+            <div class="mb-1 ml-2">Qty</div>    
+        </div>
+
+        <!--list item rows-->
+        @for (item of listItems | keyvalue; track item.key) {
+            <app-list-item-row [listIndex]="item.key" (removeItemEventEmitter)="onRemoveItem($event)" />
+        }
+    </form>
+</div>
