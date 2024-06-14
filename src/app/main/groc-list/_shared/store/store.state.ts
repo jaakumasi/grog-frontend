@@ -1,5 +1,7 @@
-import { ListItemsState } from "../types";
+import { GroceryList } from "../../../../_shared/types";
 
-export const listItemsState: ListItemsState = {
+export const activeListItem: GroceryList = {
+    id: 0,
+    mart: '',
     items: []
 }

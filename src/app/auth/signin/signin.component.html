@@ -3,7 +3,7 @@
     <div class="w-full h-[1.3rem]"></div>
 
     <app-message-box
-        message="Welcome. Sign into your <span class='text-accent'>Grog</span> account to continue"></app-message-box>
+        message="Welcome. Sign into your <span class='text-accent'>Grog</span> account to continue" />
 
     <!--space-->
     <div class="w-full h-[1.3rem]"></div>
@@ -11,10 +11,10 @@
     <form [formGroup]="signinForm">
         <div class="flex w-full flex-col-reverse xl:grid xl:grid-cols-7">
             <div class="col-span-3 xl:my-auto xl:items-center"> 
-                <app-google-auth (credentialEmitter)="onSignin($event, true)"></app-google-auth>
+                <app-google-auth (credentialEmitter)="onSignin($event, true)" />
             </div>
 
-            <app-form-divider></app-form-divider>
+            <app-form-divider />
 
             <div class="col-span-3">
                 <!--email-->
@@ -23,15 +23,15 @@
                     type="text" 
                     iconPath="./assets/images/mail.svg"
                     placeholder="Email"
-                    [invalidInput]="emailRequired! || emailPatternInvalid! || showHttpErrorResponse()">
-                </app-form-control>
+                    [invalidInput]="emailRequired! || emailPatternInvalid! || showHttpErrorResponse()"
+                />
 
                 <!--invalid email message-->
                 <app-invalid-input-message
                     [message]="emailRequired ? 'required': 
                                emailPatternInvalid ? 'enter a valid email': 
-                               showHttpErrorResponse()? httpErrorMessage(): ''">
-                </app-invalid-input-message>
+                               showHttpErrorResponse() ? httpErrorMessage(): ''"
+                />
 
                 <!--password-->
                 <app-form-control 
@@ -39,13 +39,11 @@
                     type="password" 
                     iconPath="./assets/images/password.svg"
                     placeholder="Password"
-                    [invalidInput]="passwordRequired! || showHttpErrorResponse()">
-                </app-form-control>
+                    [invalidInput]="passwordRequired! || showHttpErrorResponse()"
+                />
 
                 <!--invalid password message-->
-                <app-invalid-input-message 
-                    [message]="passwordRequired ? 'required': ''">
-                </app-invalid-input-message>
+                <app-invalid-input-message [message]="passwordRequired ? 'required': ''" />
 
                 <!--forgot password-->
                 <div 
@@ -62,8 +60,8 @@
                     btnText="Sign in" 
                     (clickEventEmitter)="onSignin(null)" 
                     [isEnabled]="isSubmitEnabled()"
-                    [isLoading]="isMakingRequest()">
-                </app-action-btn> 
+                    [isLoading]="isMakingRequest()"
+                />
 
                 <!--space-->
                 <div class="w-full h-1"></div>

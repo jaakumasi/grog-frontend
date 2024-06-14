@@ -4,16 +4,15 @@
             formControlName="name" 
             placeholder="" 
             class="col-span-2 xl:col-span-1" 
-            size="small" 
+            [initialValue]="itemName!"
         />
         <div class="flex items-center w-full xl:w-[40%]">
             <app-form-control 
                 formControlName="qty" 
-                initialValue="1"
-                [inputChanges]="defaultQtyValueEmitter"
+                type="text"
                 placeholder="" 
                 class="mr-3"
-                size="small" 
+                [initialValue]="itemQty!"
             />
             <app-icon-btn iconPath="assets/images/cancel.png" (emitter)="onRemoveItem()" />
         </div>

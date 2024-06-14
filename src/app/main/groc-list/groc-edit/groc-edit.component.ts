@@ -3,7 +3,7 @@ import { ContentBoxComponent } from '../../_shared/components/content-box/conten
 import { ContentBoxActionBtnsComponent } from '../../_shared/components/content-box-action-btns/content-box-action-btns.component';
 import { Router } from '@angular/router';
 import { ENDPOINTS } from '../../../_shared/constants';
-import { ListCreatorComponent } from '../_shared/components/list-creator/list-creator.component';
+import { ListCreatorComponent } from './components/list-creator/list-creator.component';
 
 @Component({
   selector: 'app-groc-edit',

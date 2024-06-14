@@ -6,6 +6,8 @@
             <app-form-control 
                 initialValue="~"
                 size="small"
+                placeholder="~"
+                [initialValue]="mart ?? '~'"
             />
         </div>
 
@@ -20,7 +22,7 @@
 
         <!--list item rows-->
         @for (item of listItems | keyvalue; track item.key) {
-            <app-list-item-row [listIndex]="item.key" (removeItemEventEmitter)="onRemoveItem($event)" />
+            <app-list-item-row [listIndex]="item.key" [itemData]="item.value" (removeItemEventEmitter)="onRemoveItem($event)" />
         }
     </form>
 </div>

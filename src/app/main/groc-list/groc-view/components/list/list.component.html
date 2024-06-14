@@ -27,7 +27,7 @@
             <div class="flex">
                <div class="w-[80%] 2xl:w-[70%]" (click)="onExpand()"></div>
                 <div class="flex w-full justify-between">
-                    <app-icon-btn iconPath="assets/images/edit.png" />
+                    <app-icon-btn iconPath="assets/images/edit.png" (emitter)="onEdit()"/>
                     <app-icon-btn iconPath="assets/images/go-to-calc.png" />
                     <app-icon-btn iconPath="assets/images/trash.png" />
                 </div> 

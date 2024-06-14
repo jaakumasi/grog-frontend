@@ -45,15 +45,15 @@ export type SocialLoginProvider = {
 };
 
 export type GroceryList = {
-  id?: number;
+  id: number;
   mart: string;
   createdAt?: Date;
   items: Item[];
 };
 
 export type Item = {
-  id: number;
+  id?: number;
   name: string;
   qty: number;
-  unitPrice: number;
+  unitPrice?: number;
 };

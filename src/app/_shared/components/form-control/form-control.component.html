@@ -4,9 +4,8 @@
         [formControl]="formControl"
         inputmode="numeric"
         [placeholder]="placeholder"
-        class="w-full p-3 pl-20 bg-black outline-none border-outline border-[0.1rem] rounded-md placeholder:text-white focus:border-accent" 
+        class="w-full p-[0.2rem] pl-20 bg-black outline-none border-outline border-[0.1rem] rounded-md placeholder:text-[#7b7b7b] focus:border-accent" 
         [class.pl-3]="!iconPath"
-        [class.p-1]="size === 'small'"
         [ngClass]="{ invalid: invalidInput }"
         (blur)="onInputTouched()"
     />
