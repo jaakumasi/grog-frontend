@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ENDPOINTS, REDUCERS } from '../../../../_shared/constants';
-import { BreakpointObserverService } from '../../../../_shared/services/breakpoint-observer.service';
+import { BreakpointObserverService } from '../../../../_shared/services/breakpoint-observer/breakpoint-observer.service';
 import {
   GlobalState,
   SCREEN_SIZE,

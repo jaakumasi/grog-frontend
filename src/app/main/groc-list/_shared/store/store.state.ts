@@ -1,7 +1,11 @@
-import { GroceryList } from "../../../../_shared/types";
+import { GroceryList, ListModificationState } from "../../../../_shared/types";
 
-export const activeListItem: GroceryList = {
+export const activeListData: GroceryList = {
     id: 0,
     mart: '',
     items: []
 }
+
+export const listModificationState: ListModificationState = {
+    modified: false
+};

@@ -8,7 +8,7 @@ import {
 import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BREAKPOINTS } from './_shared/constants';
-import { BreakpointObserverService } from './_shared/services/breakpoint-observer.service';
+import { BreakpointObserverService } from './_shared/services/breakpoint-observer/breakpoint-observer.service';
 import { updateScreenSize } from './_shared/store/store.actions';
 import { SCREEN_SIZE } from './_shared/types';
 

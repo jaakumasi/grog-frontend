@@ -8,9 +8,9 @@ import {
 } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { FormControlComponent } from '../../../../../_shared/components/form-control/form-control.component';
-import { Item } from '../../../../../_shared/types';
-import { IconBtnComponent } from '../../../../_shared/components/icon-btn/icon-btn.component';
+import { FormControlComponent } from '../../../../../../_shared/components/form-control/form-control.component';
+import { Item } from '../../../../../../_shared/types';
+import { IconBtnComponent } from '../../../../../_shared/components/icon-btn/icon-btn.component';
 
 /**
  * an item row with two inputs: item name & qty

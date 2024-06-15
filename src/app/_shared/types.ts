@@ -16,18 +16,6 @@ export enum VerificationScenario {
   socialSignup = 'social-signup',
 }
 
-export type GlobalState = {
-  screenSize: SCREEN_SIZE;
-  user: User | {};
-};
-
-export type User = {
-  email: string;
-  groceryList: GroceryList[];
-  otpVerified: true;
-  socialLoginProvider: SocialLoginProvider;
-};
-
 export enum SCREEN_SIZE {
   'xsmall' = 'xsmall',
   'small' = 'small',
@@ -44,6 +32,18 @@ export type SocialLoginProvider = {
   provider: string;
 };
 
+export type GlobalState = {
+  screenSize: SCREEN_SIZE;
+  user: User | {};
+};
+
+export type User = {
+  email: string;
+  groceryList: GroceryList[];
+  otpVerified: true;
+  socialLoginProvider: SocialLoginProvider;
+};
+
 export type GroceryList = {
   id: number;
   mart: string;
@@ -57,3 +57,7 @@ export type Item = {
   qty: number;
   unitPrice?: number;
 };
+
+export type ListModificationState = {
+  modified: boolean
+}
